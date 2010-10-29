@@ -104,4 +104,30 @@ describe OFX::Transaction do
       @transaction.ref_number.should == "101.901"
     end
   end
+
+  context "with other types" do
+
+    before do
+      @ofx = OFX::Parser::Base.new("spec/fixtures/bb.ofx")
+      @parser = @ofx.parser
+      @account = @parser.account
+    end
+
+    it "should return dep" do
+      @transaction = @account.transactions[8]
+      @transaction.type.should == :dep
+    end
+
+    it "should return xfer" do
+      @transaction = @account.transactions[17]
+      @transaction.type.should == :xfer
+    end
+
+    it "should return cash" do
+      @transaction = @account.transactions[44]
+      @transaction.type.should == :cash
+    end
+
+  end
+
 end

@@ -12,7 +12,10 @@ module OFX
       TRANSACTION_TYPES = {
         "CREDIT" => :credit,
         "DEBIT" => :debit,
-        "OTHER" => :other
+        "OTHER" => :other,
+        "DEP" => :dep,
+        "XFER" => :xfer,
+        "CASH" => :cash
       }
       
       attr_reader :headers
@@ -48,19 +51,25 @@ module OFX
         end
         
         def build_transaction(element)
-          amount = BigDecimal.new(element.search("trnamt").inner_text)
-          
           OFX::Transaction.new({
-            :amount => amount,
-            :amount_in_pennies => (amount * 100).to_i,
+            :amount => build_amount(element),
+            :amount_in_pennies => (build_amount(element) * 100).to_i,
             :fit_id => element.search("fitid").inner_text,
             :memo => element.search("memo").inner_text,
             :payee => element.search("payee").inner_text,
             :check_number => element.search("checknum").inner_text,
             :ref_number => element.search("refnum").inner_text,
             :posted_at => build_date(element.search("dtposted").inner_text),
-            :type => TRANSACTION_TYPES[element.search("trntype").inner_text]
+            :type => build_type(element)
           })
+        end
+
+        def build_type(element)
+          TRANSACTION_TYPES[element.search("trntype").inner_text]
+        end
+
+        def build_amount(element)
+          BigDecimal.new(element.search("trnamt").inner_text)
         end
         
         def build_date(date)
