@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ofx (0.2.7)
+    ofx (0.2.8)
       nokogiri
 
 GEM

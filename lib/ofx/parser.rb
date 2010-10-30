@@ -1,6 +1,3 @@
-require "iconv"
-require "kconv"
-
 module OFX
   module Parser
     class Base
@@ -42,35 +39,35 @@ module OFX
       end
 
       private
-        def prepare(content)
-          # Split headers & body
-          headers, body = content.dup.split(/<OFX>/, 2)
+      def prepare(content)
+        # Split headers & body
+        headers, body = content.dup.split(/<OFX>/, 2)
 
-          # Change single CR's to LF's to avoid issues with some banks
-          headers.gsub!(/\r(?!\n)/, "\n") 
+        # Change single CR's to LF's to avoid issues with some banks
+        headers.gsub!(/\r(?!\n)/, "\n")
 
-          raise OFX::UnsupportedFileError unless body
+        raise OFX::UnsupportedFileError unless body
 
-          # Parse headers. When value is NONE, convert it to nil.
-          headers = headers.to_enum(:each_line).inject({}) do |memo, line|
-            _, key, value = *line.match(/^(.*?):(.*?)(\r?\n)*$/)
-            memo[key] = value == "NONE" ? nil : value
-            memo
-          end
-
-          # Replace body tags to parse it with Nokogiri
-          body.gsub!(/>\s+</m, '><')
-          body.gsub!(/\s+</m, '<')
-          body.gsub!(/>\s+/m, '>')
-          body.gsub!(/<(\w+?)>([^<]+)/m, '<\1>\2</\1>')
-
-          [headers, body]
+        # Parse headers. When value is NONE, convert it to nil.
+        headers = headers.to_enum(:each_line).inject({}) do |memo, line|
+          _, key, value = *line.match(/^(.*?):(.*?)(\r?\n)*$/)
+          memo[key] = value == "NONE" ? nil : value
+          memo
         end
-        
-        def convert_to_utf8(string)
-          return string if Kconv.isutf8(string)
-          Iconv.conv('UTF-8', 'LATIN1//IGNORE', string) 
-        end
+
+        # Replace body tags to parse it with Nokogiri
+        body.gsub!(/>\s+</m, '><')
+        body.gsub!(/\s+</m, '<')
+        body.gsub!(/>\s+/m, '>')
+        body.gsub!(/<(\w+?)>([^<]+)/m, '<\1>\2</\1>')
+
+        [headers, body]
+      end
+
+      def convert_to_utf8(string)
+        return string if Kconv.isutf8(string)
+        Iconv.conv('UTF-8', 'LATIN1//IGNORE', string)
+      end
     end
   end
 end

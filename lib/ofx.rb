@@ -1,6 +1,9 @@
 require "open-uri"
 require "nokogiri"
 
+require "iconv"
+require "kconv"
+
 require "ofx/errors"
 require "ofx/parser"
 require "ofx/parser/ofx102"
