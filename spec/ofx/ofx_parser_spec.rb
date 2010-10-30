@@ -1,4 +1,4 @@
-require "spec/spec_helper"
+require "spec_helper"
 
 describe OFX::Parser do
   before do
