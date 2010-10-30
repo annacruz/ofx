@@ -52,15 +52,15 @@ module OFX
 
       def build_transaction(element)
         OFX::Transaction.new({
-          :amount => build_amount(element),
+          :amount            => build_amount(element),
           :amount_in_pennies => (build_amount(element) * 100).to_i,
-          :fit_id => element.search("fitid").inner_text,
-          :memo => element.search("memo").inner_text,
-          :payee => element.search("payee").inner_text,
-          :check_number => element.search("checknum").inner_text,
-          :ref_number => element.search("refnum").inner_text,
-          :posted_at => build_date(element.search("dtposted").inner_text),
-          :type => build_type(element)
+          :fit_id            => element.search("fitid").inner_text,
+          :memo              => element.search("memo").inner_text,
+          :payee             => element.search("payee").inner_text,
+          :check_number      => element.search("checknum").inner_text,
+          :ref_number        => element.search("refnum").inner_text,
+          :posted_at         => build_date(element.search("dtposted").inner_text),
+          :type              => build_type(element)
         })
       end
 
