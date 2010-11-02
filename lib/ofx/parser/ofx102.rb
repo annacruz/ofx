@@ -15,7 +15,8 @@ module OFX
         "OTHER" => :other,
         "DEP" => :dep,
         "XFER" => :xfer,
-        "CASH" => :cash
+        "CASH" => :cash,
+        "CHECK" => :check
       }
       
       attr_reader :headers
