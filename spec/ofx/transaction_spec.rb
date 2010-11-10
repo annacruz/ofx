@@ -114,18 +114,23 @@ describe OFX::Transaction do
     end
 
     it "should return dep" do
-      @transaction = @account.transactions[8]
+      @transaction = @account.transactions[9]
       @transaction.type.should == :dep
     end
 
     it "should return xfer" do
-      @transaction = @account.transactions[17]
+      @transaction = @account.transactions[18]
       @transaction.type.should == :xfer
     end
 
     it "should return cash" do
-      @transaction = @account.transactions[44]
+      @transaction = @account.transactions[45]
       @transaction.type.should == :cash
+    end
+
+    it "should return check" do
+      @transaction = @account.transactions[0]
+      @transaction.type.should == :check
     end
 
   end
