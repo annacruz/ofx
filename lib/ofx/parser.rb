@@ -7,9 +7,9 @@ module OFX
       attr_reader :parser
 
       def initialize(resource)
-          resource = open_resource(resource)
-          resource.rewind
-          @content = convert_to_utf8(resource.read)
+        resource = open_resource(resource)
+        resource.rewind
+        @content = convert_to_utf8(resource.read)
 
         begin
           @headers, @body = prepare(content)
@@ -17,10 +17,11 @@ module OFX
           raise OFX::UnsupportedFileError
         end
 
-
         case @headers["VERSION"]
         when "102" then
           @parser = OFX::Parser::OFX102.new(:headers => headers, :body => body)
+        when "211" then
+          @parser = OFX::Parser::OFX211.new(:headers => headers, :body => body)
         else
           raise OFX::UnsupportedFileError
         end
@@ -40,20 +41,15 @@ module OFX
 
       private
       def prepare(content)
-        # Split headers & body
-        headers, body = content.dup.split(/<OFX>/, 2)
-
-        # Change single CR's to LF's to avoid issues with some banks
-        headers.gsub!(/\r(?!\n)/, "\n")
+        # split headers & body
+        header_text, body = content.dup.split(/<OFX>/, 2)
 
         raise OFX::UnsupportedFileError unless body
 
-        # Parse headers. When value is NONE, convert it to nil.
-        headers = headers.to_enum(:each_line).inject({}) do |memo, line|
-          _, key, value = *line.match(/^(.*?):(.*?)(\r?\n)*$/)
-          memo[key] = value == "NONE" ? nil : value
-          memo
-        end
+        # Header format is different between versions. Give each
+        # parser a chance to parse the headers.
+        headers = OFX::Parser::OFX102.parse_headers(header_text)
+        headers ||= OFX::Parser::OFX211.parse_headers(header_text)
 
         # Replace body tags to parse it with Nokogiri
         body.gsub!(/>\s+</m, '><')
