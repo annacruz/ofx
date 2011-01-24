@@ -18,9 +18,9 @@ module OFX
         end
 
         case @headers["VERSION"]
-        when "102" then
+        when /102/ then
           @parser = OFX::Parser::OFX102.new(:headers => headers, :body => body)
-        when "211" then
+        when /200|211/ then
           @parser = OFX::Parser::OFX211.new(:headers => headers, :body => body)
         else
           raise OFX::UnsupportedFileError
