@@ -105,6 +105,16 @@ describe OFX::Transaction do
     end
   end
 
+  context "with name" do
+    before do
+      @transaction = @account.transactions[3]
+    end
+
+    it "should set name" do
+      @transaction.name.should == "Pagto conta telefone"
+    end
+  end
+
   context "with other types" do
 
     before do
