@@ -1,29 +1,26 @@
 PATH
   remote: .
   specs:
-    ofx (0.2.8)
+    ofx (0.2.9)
       nokogiri
 
 GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.2)
-    nokogiri (1.4.3.1)
-    rspec (2.0.0)
-      rspec-core (= 2.0.0)
-      rspec-expectations (= 2.0.0)
-      rspec-mocks (= 2.0.0)
-    rspec-core (2.0.0)
-    rspec-expectations (2.0.0)
-      diff-lcs (>= 1.1.2)
-    rspec-mocks (2.0.0)
-      rspec-core (= 2.0.0)
-      rspec-expectations (= 2.0.0)
+    nokogiri (1.4.4)
+    rspec (2.4.0)
+      rspec-core (~> 2.4.0)
+      rspec-expectations (~> 2.4.0)
+      rspec-mocks (~> 2.4.0)
+    rspec-core (2.4.0)
+    rspec-expectations (2.4.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.4.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  nokogiri
   ofx!
-  rspec (>= 2.0.0)
+  rspec (~> 2.0)

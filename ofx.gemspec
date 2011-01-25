@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
   s.authors     = ["Nando Vieira"]
   s.email       = ["fnando.vieira@gmail.com"]
   s.homepage    = "http://rubygems.org/gems/ofx"
-  s.summary     = "A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports OFX 1.0.2."
+  s.summary     = "A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports OFX 102, 200 and 211."
   s.description = <<-TXT
 A simple OFX (Open Financial Exchange) parser built on top of Nokogiri.
-Currently supports OFX 1.0.2.
+Currently supports OFX 102, 200 and 211.
 
 Usage:
 
@@ -27,5 +27,5 @@ TXT
   s.require_paths = ["lib"]
 
   s.add_dependency "nokogiri"
-  s.add_development_dependency "rspec", ">= 2.0.0"
+  s.add_development_dependency "rspec", "~> 2.0"
 end
