@@ -4,7 +4,7 @@ module OFX
       VERSION = "2.1.1"
 
       def self.parse_headers(header_text)
-        doc = Nokogiri(header_text)
+        doc = Nokogiri::XML(header_text)
 
         # Nokogiri can't search for processing instructions, so we
         # need to do this manually.
