@@ -1,8 +1,5 @@
-require "bigdecimal"
-
 module OFX
   module Parser
-    # I think inheritance is appropriate here. Very little has changed. 
     class OFX211 < OFX102
       VERSION = "2.1.1"
 
@@ -10,7 +7,7 @@ module OFX
         doc = Nokogiri(header_text)
 
         # Nokogiri can't search for processing instructions, so we
-        # need to do this manually. 
+        # need to do this manually.
         doc.children.each do |e|
           if e.type == Nokogiri::XML::Node::PI_NODE && e.name == "OFX"
             # Getting the attributes from the element doesn't seem to
@@ -18,10 +15,11 @@ module OFX
             return extract_headers(e.text)
           end
         end
+
+        nil
       end
 
       private
-
       def self.extract_headers(text)
         headers = {}
         text.split(/\s+/).each do |attr_text|
@@ -34,8 +32,8 @@ module OFX
       end
 
       def self.strip_quotes(s)
-        return nil if s.nil?
-        s.sub(/^"(.*)"$/,'\1')
+        return unless s
+        s.sub(/^"(.*)"$/, '\1')
       end
     end
   end

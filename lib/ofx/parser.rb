@@ -17,11 +17,11 @@ module OFX
           raise OFX::UnsupportedFileError
         end
 
-        case @headers["VERSION"]
+        case headers["VERSION"]
         when /102/ then
-          @parser = OFX::Parser::OFX102.new(:headers => headers, :body => body)
+          @parser = OFX102.new(:headers => headers, :body => body)
         when /200|211/ then
-          @parser = OFX::Parser::OFX211.new(:headers => headers, :body => body)
+          @parser = OFX211.new(:headers => headers, :body => body)
         else
           raise OFX::UnsupportedFileError
         end
@@ -29,14 +29,12 @@ module OFX
 
       def open_resource(resource)
         if resource.respond_to?(:read)
-          return resource
+          resource
         else
-          begin
-            return open(resource)
-          rescue
-            return StringIO.new(resource)
-          end
+          open(resource)
         end
+      rescue Exception
+        StringIO.new(resource)
       end
 
       private
@@ -48,13 +46,17 @@ module OFX
 
         # Header format is different between versions. Give each
         # parser a chance to parse the headers.
-        headers = OFX::Parser::OFX102.parse_headers(header_text)
-        headers ||= OFX::Parser::OFX211.parse_headers(header_text)
+        headers = nil
+
+        OFX::Parser.constants.grep(/OFX/).each do |name|
+          headers = OFX::Parser.const_get(name).parse_headers(header_text)
+          break if headers
+        end
 
         # Replace body tags to parse it with Nokogiri
-        body.gsub!(/>\s+</m, '><')
-        body.gsub!(/\s+</m, '<')
-        body.gsub!(/>\s+/m, '>')
+        body.gsub!(/>\s+</m, "><")
+        body.gsub!(/\s+</m, "<")
+        body.gsub!(/>\s+/m, ">")
         body.gsub!(/<(\w+?)>([^<]+)/m, '<\1>\2</\1>')
 
         [headers, body]
@@ -62,7 +64,7 @@ module OFX
 
       def convert_to_utf8(string)
         return string if Kconv.isutf8(string)
-        Iconv.conv('UTF-8', 'LATIN1//IGNORE', string)
+        Iconv.conv("UTF-8", "LATIN1//IGNORE", string)
       end
     end
   end

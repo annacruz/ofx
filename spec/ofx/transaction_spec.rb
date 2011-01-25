@@ -142,7 +142,5 @@ describe OFX::Transaction do
       @transaction = @account.transactions[0]
       @transaction.type.should == :check
     end
-
   end
-
 end
