@@ -6,26 +6,11 @@ module OFX
       ACCOUNT_TYPES = {
         "CHECKING" => :checking
       }
-
-      TRANSACTION_TYPES = {
-        "CREDIT" => :credit,
-        "DEBIT" => :debit,
-        "OTHER" => :other,
-        "DEP" => :dep,
-        "XFER" => :xfer,
-        "CASH" => :cash,
-        "CHECK" => :check,
-        'INT' => :int,
-        'DIV' => :div,
-        'FEE' => :fee,
-        'SRVCHG' => :srvchg,
-        'ATM' => :atm,
-        'POS' => :pos,
-        'PAYMENT' => :payment,
-        'DIRECTDEP' => :directdep,
-        'DIRECTDEBIT' => :directdebit,
-        'REPEATPMT' => :repeatpmt
-      }
+      
+      TRANSACTION_TYPES = [
+        'ATM', 'CASH', 'CHECK', 'CREDIT', 'DEBIT', 'DEP', 'DIRECTDEBIT', 'DIRECTDEP', 'DIV', 
+        'FEE', 'INT', 'OTHER', 'PAYMENT', 'POS', 'REPEATPMT', 'SRVCHG', 'XFER'
+      ].inject({}) { |hash, tran_type| hash[tran_type] = tran_type.downcase.to_sym; hash }
 
       attr_reader :headers
       attr_reader :body
