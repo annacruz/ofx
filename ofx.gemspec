@@ -27,6 +27,6 @@ TXT
   s.require_paths = ["lib"]
 
   s.add_dependency "nokogiri"
-  s.add_development_dependency "rspec", "~> 2.0"
+  s.add_development_dependency "rspec", "~> 2.6"
   s.add_development_dependency "ruby-debug19"
 end
