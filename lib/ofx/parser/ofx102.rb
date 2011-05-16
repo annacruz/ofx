@@ -14,7 +14,17 @@ module OFX
         "DEP" => :dep,
         "XFER" => :xfer,
         "CASH" => :cash,
-        "CHECK" => :check
+        "CHECK" => :check,
+        'INT' => :int,
+        'DIV' => :div,
+        'FEE' => :fee,
+        'SRVCHG' => :srvchg,
+        'ATM' => :atm,
+        'POS' => :pos,
+        'PAYMENT' => :payment,
+        'DIRECTDEP' => :directdep,
+        'DIRECTDEBIT' => :directdebit,
+        'REPEATPMT' => :repeatpmt
       }
 
       attr_reader :headers

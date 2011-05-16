@@ -26,4 +26,17 @@ describe OFX::Parser::OFX102 do
   it "should set account" do
     @parser.account.should be_a_kind_of(OFX::Account)
   end
+  
+  it "should know about all transaction types" do
+    valid_types = [
+      'CREDIT', 'DEBIT', 'INT', 'DIV', 'FEE', 'SRVCHG', 'DEP', 'ATM', 'POS', 'XFER', 
+      'CHECK', 'PAYMENT', 'CASH', 'DIRECTDEP', 'DIRECTDEBIT', 'REPEATPMT', 'OTHER'
+    ]
+    valid_types.sort.should == OFX::Parser::OFX102::TRANSACTION_TYPES.keys.sort
+    
+    valid_types.each do |transaction_type|
+      transaction_type.downcase.to_sym.should equal OFX::Parser::OFX102::TRANSACTION_TYPES[transaction_type]
+    end
+  end
+  
 end
