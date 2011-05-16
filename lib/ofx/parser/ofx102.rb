@@ -54,7 +54,7 @@ module OFX
         OFX::Account.new({
           :bank_id      => html.search("bankacctfrom > bankid").inner_text,
           :id           => html.search("bankacctfrom > acctid").inner_text,
-          :type         => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text],
+          :type         => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text.to_s.upcase],
           :transactions => build_transactions,
           :balance      => build_balance,
           :currency     => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef").inner_text
@@ -83,7 +83,7 @@ module OFX
       end
 
       def build_type(element)
-        TRANSACTION_TYPES[element.search("trntype").inner_text]
+        TRANSACTION_TYPES[element.search("trntype").inner_text.to_s.upcase]
       end
 
       def build_amount(element)
