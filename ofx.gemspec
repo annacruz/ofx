@@ -28,5 +28,5 @@ TXT
 
   s.add_dependency "nokogiri"
   s.add_development_dependency "rspec", "~> 2.6"
-  s.add_development_dependency "ruby-debug19"
+  s.add_development_dependency "ruby-debug19" unless RUBY_VERSION == "1.9.3"
 end
