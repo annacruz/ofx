@@ -64,6 +64,7 @@ module OFX
 
       def convert_to_utf8(string)
         return string if Kconv.isutf8(string)
+        return string.encode!("UTF-8", "ISO-8859-1") if String.method_defined?(:encode!)
         Iconv.conv("UTF-8", "LATIN1//IGNORE", string)
       end
     end
