@@ -43,6 +43,10 @@ describe OFX::Transaction do
     it "should have type" do
       @transaction.type.should == :debit
     end
+
+    it "should have sic" do
+      @transaction.sic.should == '5072'
+    end
   end
 
   context "credit" do
@@ -76,6 +80,10 @@ describe OFX::Transaction do
 
     it "should have type" do
       @transaction.type.should == :credit
+    end
+    
+    it "should have empty sic" do
+      @transaction.sic.should == ''
     end
   end
 

@@ -73,7 +73,8 @@ module OFX
           :check_number      => element.search("checknum").inner_text,
           :ref_number        => element.search("refnum").inner_text,
           :posted_at         => build_date(element.search("dtposted").inner_text),
-          :type              => build_type(element)
+          :type              => build_type(element),
+          :sic               => element.search("sic").inner_text
         })
       end
 
