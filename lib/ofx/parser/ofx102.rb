@@ -48,12 +48,13 @@ module OFX
       def build_account
         OFX::Account.new({
           :bank_id           => html.search("bankacctfrom > bankid").inner_text,
-          :id                => html.search("bankacctfrom > acctid").inner_text,
+          :id                => html.search("bankacctfrom > acctid, ccacctfrom > acctid").inner_text,
           :type              => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text.to_s.upcase],
           :transactions      => build_transactions,
           :balance           => build_balance,
           :available_balance => build_available_balance,
-          :currency          => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef").inner_text
+          :currency          => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef, " +
+                                            "creditcardmsgsrsv1 > ccstmttrnrs > ccstmtrs > curdef").inner_text
         })
       end
 

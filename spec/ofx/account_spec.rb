@@ -61,5 +61,21 @@ describe OFX::Account do
         @account.available_balance.should be_nil
       end
     end
+    
+    context "Credit Card" do
+      before do
+        @ofx = OFX::Parser::Base.new("spec/fixtures/creditcard.ofx")
+        @parser = @ofx.parser
+        @account = @parser.account
+      end
+
+      it "should return id" do
+        @account.id.should == "XXXXXXXXXXXX1111"
+      end
+      
+      it "should return currency" do
+        @account.currency.should == "USD"
+      end
+    end
   end
 end
