@@ -6,5 +6,6 @@ module OFX
     attr_accessor :id
     attr_accessor :transactions
     attr_accessor :type
+    attr_accessor :available_balance
   end
 end

@@ -47,12 +47,13 @@ module OFX
       private
       def build_account
         OFX::Account.new({
-          :bank_id      => html.search("bankacctfrom > bankid").inner_text,
-          :id           => html.search("bankacctfrom > acctid").inner_text,
-          :type         => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text.to_s.upcase],
-          :transactions => build_transactions,
-          :balance      => build_balance,
-          :currency     => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef").inner_text
+          :bank_id           => html.search("bankacctfrom > bankid").inner_text,
+          :id                => html.search("bankacctfrom > acctid").inner_text,
+          :type              => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text.to_s.upcase],
+          :transactions      => build_transactions,
+          :balance           => build_balance,
+          :available_balance => build_available_balance,
+          :currency          => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef").inner_text
         })
       end
 
@@ -103,6 +104,20 @@ module OFX
           :amount_in_pennies => (amount * 100).to_i,
           :posted_at => build_date(html.search("ledgerbal > dtasof").inner_text)
         })
+      end
+
+      def build_available_balance
+        if html.search("availbal").size > 0
+          amount = html.search("availbal > balamt").inner_text.to_f
+
+          OFX::Balance.new({
+            :amount => amount,
+            :amount_in_pennies => (amount * 100).to_i,
+            :posted_at => build_date(html.search("availbal > dtasof").inner_text)
+          })
+        else
+          return nil
+        end
       end
     end
   end

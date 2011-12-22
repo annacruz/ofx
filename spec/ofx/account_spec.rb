@@ -40,5 +40,26 @@ describe OFX::Account do
     it "should return balance date" do
       @account.balance.posted_at.should == Time.parse("2009-11-01")
     end
+    
+    context "available_balance" do
+      it "should return available balance" do
+        @account.available_balance.amount.should == 1555.99
+      end
+    
+      it "should return available balance in pennies" do
+        @account.available_balance.amount_in_pennies.should == 155599
+      end
+    
+      it "should return available balance date" do
+        @account.available_balance.posted_at.should == Time.parse("2009-11-01")
+      end
+      
+      it "should return nil if AVAILBAL not found" do
+        @ofx = OFX::Parser::Base.new("spec/fixtures/utf8.ofx")
+        @parser = @ofx.parser
+        @account = @parser.account
+        @account.available_balance.should be_nil
+      end
+    end
   end
 end
