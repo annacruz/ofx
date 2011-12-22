@@ -26,6 +26,10 @@ module OFX
         @account ||= build_account
       end
 
+      def sign_on
+        @sign_on ||= build_sign_on
+      end
+
       def self.parse_headers(header_text)
         # Change single CR's to LF's to avoid issues with some banks
         header_text.gsub!(/\r(?!\n)/, "\n")
@@ -55,6 +59,14 @@ module OFX
           :available_balance => build_available_balance,
           :currency          => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef, " +
                                             "creditcardmsgsrsv1 > ccstmttrnrs > ccstmtrs > curdef").inner_text
+        })
+      end
+
+      def build_sign_on
+        OFX::SignOn.new({
+          :language          => html.search("signonmsgsrsv1 > sonrs > language").inner_text,
+          :fi_id             => html.search("signonmsgsrsv1 > sonrs > fi > fid").inner_text,
+          :fi_name           => html.search("signonmsgsrsv1 > sonrs > fi > org").inner_text
         })
       end
 

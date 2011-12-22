@@ -26,6 +26,10 @@ describe OFX::Parser::OFX102 do
   it "should set account" do
     @parser.account.should be_a_kind_of(OFX::Account)
   end
+
+  it "should set account" do
+    @parser.sign_on.should be_a_kind_of(OFX::SignOn)
+  end
   
   it "should know about all transaction types" do
     valid_types = [
