@@ -48,6 +48,7 @@ module OFX
       def build_account
         OFX::Account.new({
           :bank_id      => html.search("bankacctfrom > bankid").inner_text,
+          :branch_id    => html.search("bankacctfrom > branchid").inner_text,
           :id           => html.search("bankacctfrom > acctid").inner_text,
           :type         => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text.to_s.upcase],
           :transactions => build_transactions,
