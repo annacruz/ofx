@@ -2,7 +2,6 @@ require "open-uri"
 require "nokogiri"
 require "bigdecimal"
 
-require "iconv"
 require "kconv"
 
 require "ofx/errors"

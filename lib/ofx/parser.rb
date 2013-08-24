@@ -9,9 +9,8 @@ module OFX
       def initialize(resource)
         resource = open_resource(resource)
         resource.rewind
-        @content = convert_to_utf8(resource.read)
-
         begin
+          @content = convert_to_utf8(resource.read)
           @headers, @body = prepare(content)
         rescue Exception
           raise OFX::UnsupportedFileError
@@ -64,7 +63,7 @@ module OFX
 
       def convert_to_utf8(string)
         return string if Kconv.isutf8(string)
-        Iconv.conv("UTF-8", "LATIN1//IGNORE", string)
+        string.encode("UTF-8", "ISO-8859-1")
       end
     end
   end
