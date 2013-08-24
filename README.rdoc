@@ -2,7 +2,7 @@
 
 A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports OFX 1.0.2.
 
-Works on both Ruby 1.8 and 1.9.
+Works on ruby  1.9.
 
 == Usage
 
