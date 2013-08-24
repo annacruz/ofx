@@ -1,8 +1,8 @@
 = OFX
 
-A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports OFX 1.0.2.
+A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports both OFX 1.0.2 and 2.1.1.
 
-Works on ruby  1.9.
+Works on both ruby 1.9 and 2.0.
 
 == Usage
 
@@ -14,9 +14,13 @@ Works on ruby  1.9.
     p account.transactions
   end
 
-== Maintainer
+== Creator
 
 * Nando Vieira - http://simplesideias.com.br
+
+== Maintainer
+
+* Anna Cruz - http://anna-cruz.com
 
 == License
 
