@@ -22,6 +22,10 @@ describe OFX::Parser::OFX211 do
     @parser.account.should be_a_kind_of(OFX::Account)
   end
 
+  it "should set account" do
+    @parser.sign_on.should be_a_kind_of(OFX::SignOn)
+  end
+
   context "transactions" do
     before do
       @transactions = @parser.account.transactions

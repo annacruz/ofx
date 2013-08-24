@@ -26,6 +26,10 @@ module OFX
         @account ||= build_account
       end
 
+      def sign_on
+        @sign_on ||= build_sign_on
+      end
+
       def self.parse_headers(header_text)
         # Change single CR's to LF's to avoid issues with some banks
         header_text.gsub!(/\r(?!\n)/, "\n")
@@ -47,12 +51,22 @@ module OFX
       private
       def build_account
         OFX::Account.new({
-          :bank_id      => html.search("bankacctfrom > bankid").inner_text,
-          :id           => html.search("bankacctfrom > acctid").inner_text,
-          :type         => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text.to_s.upcase],
-          :transactions => build_transactions,
-          :balance      => build_balance,
-          :currency     => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef").inner_text
+          :bank_id           => html.search("bankacctfrom > bankid").inner_text,
+          :id                => html.search("bankacctfrom > acctid, ccacctfrom > acctid").inner_text,
+          :type              => ACCOUNT_TYPES[html.search("bankacctfrom > accttype").inner_text.to_s.upcase],
+          :transactions      => build_transactions,
+          :balance           => build_balance,
+          :available_balance => build_available_balance,
+          :currency          => html.search("bankmsgsrsv1 > stmttrnrs > stmtrs > curdef, " +
+                                            "creditcardmsgsrsv1 > ccstmttrnrs > ccstmtrs > curdef").inner_text
+        })
+      end
+
+      def build_sign_on
+        OFX::SignOn.new({
+          :language          => html.search("signonmsgsrsv1 > sonrs > language").inner_text,
+          :fi_id             => html.search("signonmsgsrsv1 > sonrs > fi > fid").inner_text,
+          :fi_name           => html.search("signonmsgsrsv1 > sonrs > fi > org").inner_text
         })
       end
 
@@ -73,7 +87,8 @@ module OFX
           :check_number      => element.search("checknum").inner_text,
           :ref_number        => element.search("refnum").inner_text,
           :posted_at         => build_date(element.search("dtposted").inner_text),
-          :type              => build_type(element)
+          :type              => build_type(element),
+          :sic               => element.search("sic").inner_text
         })
       end
 
@@ -102,6 +117,20 @@ module OFX
           :amount_in_pennies => (amount * 100).to_i,
           :posted_at => build_date(html.search("ledgerbal > dtasof").inner_text)
         })
+      end
+
+      def build_available_balance
+        if html.search("availbal").size > 0
+          amount = html.search("availbal > balamt").inner_text.to_f
+
+          OFX::Balance.new({
+            :amount => amount,
+            :amount_in_pennies => (amount * 100).to_i,
+            :posted_at => build_date(html.search("availbal > dtasof").inner_text)
+          })
+        else
+          return nil
+        end
       end
     end
   end
