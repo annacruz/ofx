@@ -2,7 +2,6 @@ require "open-uri"
 require "nokogiri"
 require "bigdecimal"
 
-require "iconv" unless String.method_defined?(:encode!)
 require "kconv"
 
 require "ofx/errors"
