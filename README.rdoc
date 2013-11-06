@@ -1,4 +1,5 @@
 = OFX
+
 [![Gem Version](https://badge.fury.io/rb/ofx.png)](http://badge.fury.io/rb/ofx)
 
 A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports both OFX 1.0.2 and 2.1.1.
