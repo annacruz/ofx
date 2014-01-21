@@ -16,6 +16,8 @@ Works on both ruby 1.9 and 2.0.
     p account.transactions
   end
 
+Invalid files will raise an OFX::UnsupportedFileError.
+
 == Creator
 
 * Nando Vieira - http://simplesideias.com.br
