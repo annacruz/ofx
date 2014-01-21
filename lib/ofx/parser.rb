@@ -12,7 +12,7 @@ module OFX
         begin
           @content = convert_to_utf8(resource.read)
           @headers, @body = prepare(content)
-        rescue Exception
+        rescue
           raise OFX::UnsupportedFileError
         end
 
@@ -32,7 +32,7 @@ module OFX
         else
           open(resource)
         end
-      rescue Exception
+      rescue
         StringIO.new(resource)
       end
 
