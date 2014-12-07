@@ -47,6 +47,12 @@ describe OFX::Parser do
     }.should raise_error(OFX::UnsupportedFileError)
   end
 
+  it "should use 211 parser to parse version 200 ofx files" do
+    OFX::Parser::OFX211.stub(:new).and_return('ofx-211-parser')
+    ofx = OFX::Parser::Base.new(ofx_2_example('200'))
+    ofx.parser.should == 'ofx-211-parser'
+  end
+
   describe "headers" do
     it "should have OFXHEADER" do
       @ofx.headers["OFXHEADER"].should == "100"
@@ -87,16 +93,25 @@ describe OFX::Parser do
       @ofx.headers.should have_key("NEWFILEUID")
       @ofx.headers["NEWFILEUID"].should be_nil
     end
-    
+
     it "should parse headers with CR and without LF" do
       @ofx = OFX::Parser::Base.new(ofx_with_carriage_return)
       @ofx.headers.size.should be(9)
     end
   end
-  
+
   def ofx_with_carriage_return
     header = %{OFXHEADER:100\rDATA:OFXSGML\rVERSION:102\rSECURITY:NONE\rENCODING:USASCII\rCHARSET:1252\rCOMPRESSION:NONE\rOLDFILEUID:NONE\rNEWFILEUID:NONE\r}
     body   = open("spec/fixtures/sample.ofx").read.split(/<OFX>/, 2)[1]
     header + "<OFX>" + body
+  end
+
+  def ofx_2_example(version)
+    <<-EndOfx
+<?xml version="1.0" encoding="US-ASCII"?>
+<?OFX OFXHEADER="200" VERSION="#{version}" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="NONE"?>"
+<OFX>
+</OFX>
+    EndOfx
   end
 end
