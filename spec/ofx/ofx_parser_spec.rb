@@ -53,6 +53,12 @@ describe OFX::Parser do
     ofx.parser.should == 'ofx-211-parser'
   end
 
+  it "should use 211 parser to parse version 202 ofx files" do
+    OFX::Parser::OFX211.stub(:new).and_return('ofx-211-parser')
+    ofx = OFX::Parser::Base.new(ofx_2_example('202'))
+    ofx.parser.should == 'ofx-211-parser'
+  end
+
   describe "headers" do
     it "should have OFXHEADER" do
       @ofx.headers["OFXHEADER"].should == "100"
