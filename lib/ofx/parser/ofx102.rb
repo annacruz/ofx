@@ -6,9 +6,9 @@ module OFX
       ACCOUNT_TYPES = {
         "CHECKING" => :checking
       }
-      
+
       TRANSACTION_TYPES = [
-        'ATM', 'CASH', 'CHECK', 'CREDIT', 'DEBIT', 'DEP', 'DIRECTDEBIT', 'DIRECTDEP', 'DIV', 
+        'ATM', 'CASH', 'CHECK', 'CREDIT', 'DEBIT', 'DEP', 'DIRECTDEBIT', 'DIRECTDEP', 'DIV',
         'FEE', 'INT', 'OTHER', 'PAYMENT', 'POS', 'REPEATPMT', 'SRVCHG', 'XFER'
       ].inject({}) { |hash, tran_type| hash[tran_type] = tran_type.downcase.to_sym; hash }
 
@@ -111,11 +111,12 @@ module OFX
 
       def build_balance
         amount = html.search("ledgerbal > balamt").inner_text.to_f
+        posted_at = build_date(html.search("ledgerbal > dtasof").inner_text) rescue nil
 
         OFX::Balance.new({
           :amount => amount,
           :amount_in_pennies => (amount * 100).to_i,
-          :posted_at => build_date(html.search("ledgerbal > dtasof").inner_text)
+          :posted_at => posted_at
         })
       end
 
