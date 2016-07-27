@@ -26,16 +26,16 @@ describe OFX::Parser::OFX211 do
     @parser.sign_on.should be_a_kind_of(OFX::SignOn)
   end
 
-  context "transactions" do
-    before do
-      @transactions = @parser.account.transactions
-    end
+  it "should set accounts" do
+    @parser.accounts.size.should == 2
+  end
 
+  context "transactions" do
     # Test file contains only three transactions. Let's just check
     # them all.
     context "first" do
       before do
-        @t = @transactions[0]
+        @t = @parser.accounts[0].transactions[0]
       end
 
       it "should contain the correct values" do
@@ -49,7 +49,7 @@ describe OFX::Parser::OFX211 do
 
     context "second" do
       before do
-        @t = @transactions[1]
+        @t = @parser.accounts[1].transactions[0]
       end
       
       it "should contain the correct values" do
@@ -63,7 +63,7 @@ describe OFX::Parser::OFX211 do
     
     context "third" do
       before do
-        @t = @transactions[2]
+        @t = @parser.accounts[1].transactions[1]
       end
       
       it "should contain the correct values" do
