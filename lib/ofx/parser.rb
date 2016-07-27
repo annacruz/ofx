@@ -21,7 +21,7 @@ module OFX
           @parser = OFX102.new(:headers => headers, :body => body)
         when /103/ then
           @parser = OFX103.new(:headers => headers, :body => body)
-        when /200|211/ then
+        when /200|202|211/ then
           @parser = OFX211.new(:headers => headers, :body => body)
         else
           raise OFX::UnsupportedFileError
