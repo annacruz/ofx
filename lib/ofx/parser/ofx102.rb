@@ -107,6 +107,8 @@ module OFX
       def build_date(date)
         _, year, month, day, hour, minutes, seconds = *date.match(/(\d{4})(\d{2})(\d{2})(?:(\d{2})(\d{2})(\d{2}))?/)
 
+        return nil if year.to_i.zero? || month.to_i.zero? || day.to_i.zero?
+
         date = "#{year}-#{month}-#{day} "
         date << "#{hour}:#{minutes}:#{seconds}" if hour && minutes && seconds
 
