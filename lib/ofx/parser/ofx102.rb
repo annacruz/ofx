@@ -113,9 +113,9 @@ module OFX
         Time.parse(date)
       end
 
-      def build_balance
-        amount = html.search("ledgerbal > balamt").inner_text.to_f
-        posted_at = build_date(html.search("ledgerbal > dtasof").inner_text) rescue nil
+      def build_balance(node)
+        amount = node.search("ledgerbal > balamt").inner_text.to_f
+        posted_at = build_date(node.search("ledgerbal > dtasof").inner_text) rescue nil
 
         OFX::Balance.new({
           :amount => amount,
