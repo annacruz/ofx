@@ -88,5 +88,18 @@ describe OFX::Account do
         @account.balance.posted_at.should be_nil
       end
     end
+
+    context "Invalid Dates" do
+      before do
+        @ofx = OFX::Parser::Base.new("spec/fixtures/bradesco.ofx")
+        @parser = @ofx.parser
+      end
+      it "should not raise error when balance has date zero" do
+        expect { @parser.account.balance }.to_not raise_error
+      end
+      it "should return NIL in balance.posted_at when balance date is zero" do
+        @parser.account.balance.posted_at.should be_nil
+     end
+    end
   end
 end
