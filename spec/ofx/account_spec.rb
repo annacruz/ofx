@@ -30,7 +30,7 @@ describe OFX::Account do
     end
 
     it "should return balance" do
-      @account.balance.amount.should == 598.44
+      @account.balance.amount.should == BigDecimal('598.44')
     end
 
     it "should return balance in pennies" do
@@ -43,7 +43,7 @@ describe OFX::Account do
 
     context "available_balance" do
       it "should return available balance" do
-        @account.available_balance.amount.should == 1555.99
+        @account.available_balance.amount.should == BigDecimal('1555.99')
       end
 
       it "should return available balance in pennies" do
@@ -100,6 +100,32 @@ describe OFX::Account do
       it "should return NIL in balance.posted_at when balance date is zero" do
         @parser.account.balance.posted_at.should be_nil
      end
+    end
+
+    context "decimal values using a comma" do
+      before do
+        @ofx = OFX::Parser::Base.new("spec/fixtures/santander.ofx")
+        @parser = @ofx.parser
+        @account = @parser.account
+      end
+
+      it "should return balance" do
+        @account.balance.amount.should == BigDecimal('348.29')
+      end
+
+      it "should return balance in pennies" do
+        @account.balance.amount_in_pennies.should == 34829
+      end
+
+      context "available_balance" do
+        it "should return available balance" do
+          @account.available_balance.amount.should == BigDecimal('2415.87')
+        end
+
+        it "should return available balance in pennies" do
+          @account.available_balance.amount_in_pennies.should == 241587
+        end
+      end
     end
   end
 end

@@ -101,7 +101,7 @@ module OFX
       end
 
       def build_amount(element)
-        BigDecimal.new(element.search("trnamt").inner_text)
+        to_decimal(element.search("trnamt").inner_text)
       end
 
       def build_date(date)
@@ -114,7 +114,7 @@ module OFX
       end
 
       def build_balance(node)
-        amount = node.search("ledgerbal > balamt").inner_text.to_f
+        amount = to_decimal(node.search("ledgerbal > balamt").inner_text)
         posted_at = build_date(node.search("ledgerbal > dtasof").inner_text) rescue nil
 
         OFX::Balance.new({
@@ -126,7 +126,7 @@ module OFX
 
       def build_available_balance(node)
         if node.search("availbal").size > 0
-          amount = node.search("availbal > balamt").inner_text.to_f
+          amount = to_decimal(node.search("availbal > balamt").inner_text)
 
           OFX::Balance.new({
             :amount => amount,
@@ -136,6 +136,10 @@ module OFX
         else
           return nil
         end
+      end
+
+      def to_decimal(amount)
+        BigDecimal.new(amount.to_s.gsub(',', '.'))
       end
     end
   end
