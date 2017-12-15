@@ -13,7 +13,7 @@ describe OFX::Transaction do
     end
 
     it "should set amount" do
-      @transaction.amount.should == -35.34
+      @transaction.amount.should == BigDecimal('-35.34')
     end
 
     it "should cast amount to BigDecimal" do
@@ -55,7 +55,7 @@ describe OFX::Transaction do
     end
 
     it "should set amount" do
-      @transaction.amount.should == 60.39
+      @transaction.amount.should == BigDecimal('60.39')
     end
 
     it "should set amount in pennies" do
@@ -81,7 +81,7 @@ describe OFX::Transaction do
     it "should have type" do
       @transaction.type.should == :credit
     end
-    
+
     it "should have empty sic" do
       @transaction.sic.should == ''
     end
@@ -124,7 +124,6 @@ describe OFX::Transaction do
   end
 
   context "with other types" do
-
     before do
       @ofx = OFX::Parser::Base.new("spec/fixtures/bb.ofx")
       @parser = @ofx.parser
@@ -149,6 +148,42 @@ describe OFX::Transaction do
     it "should return check" do
       @transaction = @account.transactions[0]
       @transaction.type.should == :check
+    end
+  end
+
+  context "decimal values using a comma" do
+    before do
+      @ofx = OFX::Parser::Base.new("spec/fixtures/santander.ofx")
+      @parser = @ofx.parser
+      @account = @parser.account
+    end
+
+    context "debit" do
+      before do
+        @transaction = @account.transactions[0]
+      end
+
+      it "should set amount" do
+        @transaction.amount.should == BigDecimal('-11.76')
+      end
+
+      it "should set amount in pennies" do
+        @transaction.amount_in_pennies.should == -1176
+      end
+    end
+
+    context "credit" do
+      before do
+        @transaction = @account.transactions[3]
+      end
+
+      it "should set amount" do
+        @transaction.amount.should == BigDecimal('47.01')
+      end
+
+      it "should set amount in pennies" do
+        @transaction.amount_in_pennies.should == 4701
+      end
     end
   end
 end
