@@ -42,5 +42,21 @@ describe OFX::Parser::OFX102 do
       transaction_type.downcase.to_sym.should equal OFX::Parser::OFX102::TRANSACTION_TYPES[transaction_type]
     end
   end
-  
+
+  describe "#build_date" do
+    context "without a Time Zone" do
+      it "should default to GMT" do
+        @parser.send(:build_date, "20170904").should == Time.gm(2017, 9, 4)
+        @parser.send(:build_date, "20170904082855").should == Time.gm(2017, 9, 4, 8, 28, 55)
+      end
+    end
+
+    context "with a Time Zone" do
+      it "should returns the correct date" do
+        @parser.send(:build_date, "20150507164333[-0300:BRT]").should == Time.new(2015, 5, 7, 16, 43, 33, "-03:00")
+        @parser.send(:build_date, "20180507120000[0:GMT]").should == Time.gm(2018, 5, 7, 12)
+        @parser.send(:build_date, "20170904082855[-3:GMT]").should == Time.new(2017, 9, 4, 8, 28, 55, "-03:00")
+      end
+    end
+  end
 end
