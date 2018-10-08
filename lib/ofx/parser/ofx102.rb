@@ -12,6 +12,12 @@ module OFX
         'FEE', 'INT', 'OTHER', 'PAYMENT', 'POS', 'REPEATPMT', 'SRVCHG', 'XFER'
       ].inject({}) { |hash, tran_type| hash[tran_type] = tran_type.downcase.to_sym; hash }
 
+      SEVERITY = {
+        "INFO" => :info,
+        "WARN" => :warn,
+        "ERROR" => :error
+      }
+
       attr_reader :headers
       attr_reader :body
       attr_reader :html
@@ -66,11 +72,20 @@ module OFX
         })
       end
 
+      def build_status(node)
+        OFX::Status.new({
+          :code              => node.search("code").inner_text.to_i,
+          :severity          => SEVERITY[node.search("severity").inner_text],
+          :message           => node.search("message").inner_text,
+        })
+      end
+
       def build_sign_on
         OFX::SignOn.new({
           :language          => html.search("signonmsgsrsv1 > sonrs > language").inner_text,
           :fi_id             => html.search("signonmsgsrsv1 > sonrs > fi > fid").inner_text,
-          :fi_name           => html.search("signonmsgsrsv1 > sonrs > fi > org").inner_text
+          :fi_name           => html.search("signonmsgsrsv1 > sonrs > fi > org").inner_text,
+          :status            => build_status(html.search("signonmsgsrsv1 > sonrs > status"))
         })
       end
 
