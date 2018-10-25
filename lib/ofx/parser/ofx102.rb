@@ -22,6 +22,10 @@ module OFX
         @html = Nokogiri::HTML.parse(body)
       end
 
+      def statements
+        @statements ||= html.search("stmttrnrs, ccstmttrnrs").collect { |node| build_statement(node) }
+      end
+
       def accounts
         @accounts ||= html.search("stmttrnrs, ccstmttrnrs").collect { |node| build_account(node) }
       end
@@ -54,6 +58,21 @@ module OFX
       end
 
       private
+
+      def build_statement(node)
+        stmrs_node = node.search("stmtrs, ccstmtrs")
+        account = build_account(node)
+        OFX::Statement.new(
+          :currency          => stmrs_node.search("curdef").inner_text,
+          :start_date        => build_date(stmrs_node.search("banktranlist > dtstart").inner_text),
+          :end_date          => build_date(stmrs_node.search("banktranlist > dtend").inner_text),
+          :account           => account,
+          :transactions      => account.transactions,
+          :balance           => account.balance,
+          :available_balance => account.available_balance
+        )
+      end
+
       def build_account(node)
         OFX::Account.new({
           :bank_id           => node.search("bankacctfrom > bankid").inner_text,

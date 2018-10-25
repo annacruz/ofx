@@ -30,6 +30,11 @@ describe OFX::Parser::OFX211 do
     @parser.accounts.size.should == 2
   end
 
+  it "should set statements" do
+    @parser.statements.size.should == 2
+    @parser.statements.first.should be_a_kind_of(OFX::Statement)
+  end
+
   context "transactions" do
     # Test file contains only three transactions. Let's just check
     # them all.
