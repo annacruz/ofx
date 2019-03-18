@@ -1,7 +1,6 @@
 = OFX
 
-{<img src="https://badge.fury.io/rb/ofx.png" alt="Gem Version" />}[http://badge.fury.io/rb/ofx]
-{<img src="https://travis-ci.org/annacruz/ofx.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/annacruz/ofx]
+{<img src="https://travis-ci.org/tiagoefmoraes/ofx.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/tiagoefmoraes/ofx]
 
 A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports both OFX 1.0.2 and 2.1.1.
 
@@ -23,7 +22,7 @@ Invalid files will raise an OFX::UnsupportedFileError.
 
 * Nando Vieira - http://simplesideias.com.br
 
-== Maintainer
+== Past Maintainer
 
 * Anna Cruz - http://anna-cruz.com
 
