@@ -141,11 +141,23 @@ module OFX
         to_decimal(element.search("trnamt").inner_text)
       end
 
+      # Input format is `YYYYMMDDHHMMSS.XXX[gmt offset[:tz name]]`
       def build_date(date)
-        _, year, month, day, hour, minutes, seconds = *date.match(/(\d{4})(\d{2})(\d{2})(?:(\d{2})(\d{2})(\d{2}))?/)
+        tz_pattern = /(?:\[([+-]?\d{1,4})\:\S{3}\])?\z/
 
-        date = "#{year}-#{month}-#{day} "
-        date << "#{hour}:#{minutes}:#{seconds}" if hour && minutes && seconds
+        # Timezone offset handling
+        date.sub!(tz_pattern, '')
+        offset = Regexp.last_match(1)
+
+        if offset
+          # Offset padding
+          _, hours, mins = *offset.match(/\A([+-]?\d{1,2})(\d{0,2})?\z/)
+          offset = "%+03d%02d" % [hours.to_i, mins.to_i]
+        else
+          offset = "+0000"
+        end
+
+        date << " #{offset}"
 
         Time.parse(date)
       end

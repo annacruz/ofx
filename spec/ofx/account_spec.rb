@@ -38,7 +38,7 @@ describe OFX::Account do
     end
 
     it "should return balance date" do
-      @account.balance.posted_at.should == Time.parse("2009-11-01")
+      @account.balance.posted_at.should == Time.gm(2009,11,1)
     end
 
     context "available_balance" do
@@ -51,7 +51,7 @@ describe OFX::Account do
       end
 
       it "should return available balance date" do
-        @account.available_balance.posted_at.should == Time.parse("2009-11-01")
+        @account.available_balance.posted_at.should == Time.gm(2009,11,1)
       end
 
       it "should return nil if AVAILBAL not found" do
