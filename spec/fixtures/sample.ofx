@@ -41,6 +41,7 @@ NEWFILEUID:NONE
 					<STMTTRN>
 						<TRNTYPE>DEBIT
 						<DTPOSTED>20091009080000
+						<DTUSER>20090909080000
 						<TRNAMT>-35.34
 						<FITID>200910091
 						<CHECKNUM>0001223
@@ -49,23 +50,23 @@ NEWFILEUID:NONE
 					</STMTTRN><STMTTRN>
 						<TRNTYPE>CREDIT
 						<DTPOSTED>20091016080000
+						<DTUSER>20090916080000
 						<TRNAMT>60.39
 						<FITID>200910162
 						<CHECKNUM>0880136
 						<MEMO>DEPOSITO POUP.CORRENTE
 					</STMTTRN>
-					
 					<STMTTRN>
-                          <TRNTYPE>OTHER</TRNTYPE>
-                          <DTPOSTED>20091019120000[-3:BRT]</DTPOSTED>
-                          <TRNAMT>-148.40</TRNAMT>
-                          <FITID>200910191148400</FITID>
-                          <CHECKNUM>000000101901</CHECKNUM>
-                          <REFNUM>101.901</REFNUM>
-                          <PAYEE>Pagto conta telefone</PAYEE>
-                          <MEMO>Pagto conta telefone</MEMO>
-                       </STMTTRN>
-					
+            <TRNTYPE>OTHER</TRNTYPE>
+            <DTPOSTED>20091019120000[-3:BRT]</DTPOSTED>
+            <DTUSER>20091017120000[-3:BRT]</DTPOSTED>
+            <TRNAMT>-148.40</TRNAMT>
+            <FITID>200910191148400</FITID>
+            <CHECKNUM>000000101901</CHECKNUM>
+            <REFNUM>101.901</REFNUM>
+            <PAYEE>Pagto conta telefone</PAYEE>
+            <MEMO>Pagto conta telefone</MEMO>
+         </STMTTRN>
 					<STMTTRN>
 						<TRNTYPE>DEBIT
 						<DTPOSTED>20091013080000

@@ -118,6 +118,8 @@ module OFX
       end
 
       def build_transaction(element)
+        occurred_at = build_date(element.search("dtuser").inner_text) rescue nil
+
         OFX::Transaction.new({
           :amount            => build_amount(element),
           :amount_in_pennies => (build_amount(element) * 100).to_i,
@@ -128,6 +130,7 @@ module OFX
           :check_number      => element.search("checknum").inner_text,
           :ref_number        => element.search("refnum").inner_text,
           :posted_at         => build_date(element.search("dtposted").inner_text),
+          :occurred_at       => occurred_at,
           :type              => build_type(element),
           :sic               => element.search("sic").inner_text
         })

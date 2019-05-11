@@ -40,6 +40,10 @@ describe OFX::Transaction do
       @transaction.posted_at.should == Time.gm(2009,10,9,8)
     end
 
+    it 'should have user date' do
+      @transaction.occurred_at.should == Time.parse("2009-09-09 08:00:00")
+    end
+
     it "should have type" do
       @transaction.type.should == :debit
     end
@@ -78,6 +82,10 @@ describe OFX::Transaction do
       @transaction.posted_at.should == Time.parse("2009-10-16 08:00:00 +0000")
     end
 
+    it "should have user date" do
+      @transaction.occurred_at.should == Time.parse("2009-09-16 08:00:00")
+    end
+
     it "should have type" do
       @transaction.type.should == :credit
     end
@@ -102,6 +110,10 @@ describe OFX::Transaction do
 
     it "should have date" do
       @transaction.posted_at.should == Time.parse("2009-10-19 12:00:00 -0300")
+    end
+
+    it "should have user date" do
+      @transaction.occurred_at.should == Time.parse("2009-10-17 12:00:00")
     end
 
     it "should have type" do

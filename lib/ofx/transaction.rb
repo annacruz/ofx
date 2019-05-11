@@ -8,6 +8,7 @@ module OFX
     attr_accessor :name
     attr_accessor :payee
     attr_accessor :posted_at
+    attr_accessor :occurred_at
     attr_accessor :ref_number
     attr_accessor :type
     attr_accessor :sic
