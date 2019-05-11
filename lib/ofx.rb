@@ -13,6 +13,7 @@ require "ofx/foundation"
 require "ofx/balance"
 require "ofx/account"
 require "ofx/sign_on"
+require "ofx/statement"
 require "ofx/transaction"
 require "ofx/version"
 
