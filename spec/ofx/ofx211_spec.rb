@@ -30,6 +30,11 @@ describe OFX::Parser::OFX211 do
     @parser.accounts.size.should == 2
   end
 
+  it "should set statements" do
+    @parser.statements.size.should == 2
+    @parser.statements.first.should be_a_kind_of(OFX::Statement)
+  end
+
   context "transactions" do
     # Test file contains only three transactions. Let's just check
     # them all.
@@ -42,7 +47,7 @@ describe OFX::Parser::OFX211 do
         @t.amount.should == BigDecimal('-80')
         @t.fit_id.should == "219378"
         @t.memo.should be_empty
-        @t.posted_at.should == Time.parse("2005-08-24 08:00:00")
+        @t.posted_at.should == Time.parse("2005-08-24 08:00:00 +0000")
         @t.name.should == "FrogKick Scuba Gear"
       end
     end
@@ -56,7 +61,7 @@ describe OFX::Parser::OFX211 do
         @t.amount.should == BigDecimal('-23')
         @t.fit_id.should == "219867"
         @t.memo.should be_empty
-        @t.posted_at.should == Time.parse("2005-08-11 08:00:00")
+        @t.posted_at.should == Time.parse("2005-08-11 08:00:00 +0000")
         @t.name.should == "Interest Charge"
       end
     end
@@ -70,7 +75,7 @@ describe OFX::Parser::OFX211 do
         @t.amount.should == BigDecimal('350')
         @t.fit_id.should == "219868"
         @t.memo.should be_empty
-        @t.posted_at.should == Time.parse("2005-08-11 08:00:00")
+        @t.posted_at.should == Time.parse("2005-08-11 08:00:00 +0000")
         @t.name.should == "Payment - Thank You"
       end
     end

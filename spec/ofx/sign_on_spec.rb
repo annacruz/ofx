@@ -19,5 +19,9 @@ describe OFX::SignOn do
     it "should return Financial Institution Name" do
       @sign_on.fi_name.should == "Citigroup"
     end
+
+    it "should return status" do
+      @sign_on.status.should be_a(OFX::Status)
+    end
   end
 end

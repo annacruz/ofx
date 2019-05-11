@@ -4,13 +4,22 @@ module OFX
       VERSION = "1.0.2"
 
       ACCOUNT_TYPES = {
-        "CHECKING" => :checking
+        "CHECKING" => :checking,
+        "SAVINGS"  => :savings,
+        "CREDITLINE" => :creditline,
+        "MONEYMRKT" => :moneymrkt
       }
 
       TRANSACTION_TYPES = [
         'ATM', 'CASH', 'CHECK', 'CREDIT', 'DEBIT', 'DEP', 'DIRECTDEBIT', 'DIRECTDEP', 'DIV',
         'FEE', 'INT', 'OTHER', 'PAYMENT', 'POS', 'REPEATPMT', 'SRVCHG', 'XFER'
       ].inject({}) { |hash, tran_type| hash[tran_type] = tran_type.downcase.to_sym; hash }
+
+      SEVERITY = {
+        "INFO" => :info,
+        "WARN" => :warn,
+        "ERROR" => :error
+      }
 
       attr_reader :headers
       attr_reader :body
@@ -20,6 +29,10 @@ module OFX
         @headers = options[:headers]
         @body = options[:body]
         @html = Nokogiri::HTML.parse(body)
+      end
+
+      def statements
+        @statements ||= html.search("stmttrnrs, ccstmttrnrs").collect { |node| build_statement(node) }
       end
 
       def accounts
@@ -54,6 +67,21 @@ module OFX
       end
 
       private
+
+      def build_statement(node)
+        stmrs_node = node.search("stmtrs, ccstmtrs")
+        account = build_account(node)
+        OFX::Statement.new(
+          :currency          => stmrs_node.search("curdef").inner_text,
+          :start_date        => build_date(stmrs_node.search("banktranlist > dtstart").inner_text),
+          :end_date          => build_date(stmrs_node.search("banktranlist > dtend").inner_text),
+          :account           => account,
+          :transactions      => account.transactions,
+          :balance           => account.balance,
+          :available_balance => account.available_balance
+        )
+      end
+
       def build_account(node)
         OFX::Account.new({
           :bank_id           => node.search("bankacctfrom > bankid").inner_text,
@@ -66,11 +94,20 @@ module OFX
         })
       end
 
+      def build_status(node)
+        OFX::Status.new({
+          :code              => node.search("code").inner_text.to_i,
+          :severity          => SEVERITY[node.search("severity").inner_text],
+          :message           => node.search("message").inner_text,
+        })
+      end
+
       def build_sign_on
         OFX::SignOn.new({
           :language          => html.search("signonmsgsrsv1 > sonrs > language").inner_text,
           :fi_id             => html.search("signonmsgsrsv1 > sonrs > fi > fid").inner_text,
-          :fi_name           => html.search("signonmsgsrsv1 > sonrs > fi > org").inner_text
+          :fi_name           => html.search("signonmsgsrsv1 > sonrs > fi > org").inner_text,
+          :status            => build_status(html.search("signonmsgsrsv1 > sonrs > status"))
         })
       end
 
@@ -107,11 +144,23 @@ module OFX
         to_decimal(element.search("trnamt").inner_text)
       end
 
+      # Input format is `YYYYMMDDHHMMSS.XXX[gmt offset[:tz name]]`
       def build_date(date)
-        _, year, month, day, hour, minutes, seconds = *date.match(/(\d{4})(\d{2})(\d{2})(?:(\d{2})(\d{2})(\d{2}))?/)
+        tz_pattern = /(?:\[([+-]?\d{1,4})\:\S{3}\])?\z/
 
-        date = "#{year}-#{month}-#{day} "
-        date << "#{hour}:#{minutes}:#{seconds}" if hour && minutes && seconds
+        # Timezone offset handling
+        date.sub!(tz_pattern, '')
+        offset = Regexp.last_match(1)
+
+        if offset
+          # Offset padding
+          _, hours, mins = *offset.match(/\A([+-]?\d{1,2})(\d{0,2})?\z/)
+          offset = "%+03d%02d" % [hours.to_i, mins.to_i]
+        else
+          offset = "+0000"
+        end
+
+        date << " #{offset}"
 
         Time.parse(date)
       end
