@@ -27,7 +27,7 @@ TXT
   s.require_paths = ["lib"]
 
   s.add_dependency "nokogiri"
-  s.add_development_dependency "rspec", "~> 2.7"
+  s.add_development_dependency "rspec", "~> 3.8"
   s.add_development_dependency "rake"
   s.add_development_dependency "pry-byebug"
 end
