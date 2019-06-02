@@ -191,7 +191,7 @@ module OFX
       end
 
       def to_decimal(amount)
-        BigDecimal(amount.to_s.gsub(',', '.'))
+        BigDecimal(amount.to_s.tr(',', '.'))
       end
     end
   end
