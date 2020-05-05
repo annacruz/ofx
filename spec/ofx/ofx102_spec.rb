@@ -55,5 +55,16 @@ describe OFX::Parser::OFX102 do
       @parser.account.should be_a_kind_of(OFX::Account)
     end
   end
+
+  context "sample not balance" do
+    before do
+      @ofx = OFX::Parser::Base.new("spec/fixtures/sample_not_tag_balance.ofx")
+      @parser = @ofx.parser
+    end
+        
+    it "should set account" do
+      @parser.account.should be_a_kind_of(OFX::Account)
+    end
+  end
   
 end
