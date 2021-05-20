@@ -41,7 +41,7 @@ describe OFX::Transaction do
     end
 
     it 'should have user date' do
-      @transaction.occurred_at.should == Time.parse("2009-09-09 08:00:00")
+      @transaction.occurred_at.should == Time.parse("2009-09-09 08:00:00 +0000")
     end
 
     it "should have type" do
@@ -83,7 +83,7 @@ describe OFX::Transaction do
     end
 
     it "should have user date" do
-      @transaction.occurred_at.should == Time.parse("2009-09-16 08:00:00")
+      @transaction.occurred_at.should == Time.parse("2009-09-16 08:00:00 +0000")
     end
 
     it "should have type" do
