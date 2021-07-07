@@ -22,7 +22,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     racc (1.5.2)
-    rake (13.0.3)
+    rake (13.0.4)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
