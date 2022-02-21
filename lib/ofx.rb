@@ -1,22 +1,24 @@
-require "open-uri"
-require "nokogiri"
-require "bigdecimal"
+# frozen_string_literal: true
 
-require "kconv"
+require 'open-uri'
+require 'nokogiri'
+require 'bigdecimal'
 
-require "ofx/errors"
-require "ofx/parser"
-require "ofx/parser/ofx102"
-require "ofx/parser/ofx103"
-require "ofx/parser/ofx211"
-require "ofx/foundation"
-require "ofx/balance"
-require "ofx/account"
-require "ofx/sign_on"
-require "ofx/status"
-require "ofx/statement"
-require "ofx/transaction"
-require "ofx/version"
+require 'kconv'
+
+require 'ofx/errors'
+require 'ofx/parser'
+require 'ofx/parser/ofx102'
+require 'ofx/parser/ofx103'
+require 'ofx/parser/ofx211'
+require 'ofx/foundation'
+require 'ofx/balance'
+require 'ofx/account'
+require 'ofx/sign_on'
+require 'ofx/status'
+require 'ofx/statement'
+require 'ofx/transaction'
+require 'ofx/version'
 
 def OFX(resource, &block)
   parser = OFX::Parser::Base.new(resource).parser
