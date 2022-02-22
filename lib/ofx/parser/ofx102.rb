@@ -75,7 +75,7 @@ module OFX
           currency: stmrs_node.search('curdef').inner_text,
           start_date: build_date(stmrs_node.search('banktranlist > dtstart').inner_text),
           end_date: build_date(stmrs_node.search('banktranlist > dtend').inner_text),
-          account:,
+          account: account,
           transactions: account.transactions,
           balance: account.balance,
           available_balance: account.available_balance
