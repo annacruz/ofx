@@ -23,7 +23,7 @@ module OFX
         'INFO' => :info,
         'WARN' => :warn,
         'ERROR' => :error
-      }.freeza
+      }.freeze
 
       attr_reader :headers, :body, :html
 
@@ -134,7 +134,7 @@ module OFX
                                check_number: element.search('checknum').inner_text,
                                ref_number: element.search('refnum').inner_text,
                                posted_at: build_date(element.search('dtposted').inner_text),
-                               occurred_at:,
+                               occurred_at: occurred_at,
                                type: build_type(element),
                                sic: element.search('sic').inner_text
                              })
@@ -164,7 +164,7 @@ module OFX
           offset = '+0000'
         end
 
-        date << ' #{offset}'
+        date << " #{offset}"
 
         Time.parse(date)
       end
@@ -178,9 +178,9 @@ module OFX
         end
 
         OFX::Balance.new({
-                           amount:,
+                           amount: amount,
                            amount_in_pennies: (amount * 100).to_i,
-                           posted_at:
+                           posted_at: posted_at
                          })
       end
 
@@ -189,7 +189,7 @@ module OFX
           amount = to_decimal(node.search('availbal > balamt').inner_text)
 
           OFX::Balance.new({
-                             amount:,
+                             amount: amount,
                              amount_in_pennies: (amount * 100).to_i,
                              posted_at: build_date(node.search('availbal > dtasof').inner_text)
                            })
