@@ -199,7 +199,7 @@ describe OFX::Transaction do
     end
   end
 
-  context "malformed transaction amount" do
+  context "invalid decimal values" do
     before do
       @ofx = OFX::Parser::Base.new("spec/fixtures/cef_malformed_decimal.ofx")
       @parser = @ofx.parser
