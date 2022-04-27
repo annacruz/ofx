@@ -198,4 +198,23 @@ describe OFX::Transaction do
       end
     end
   end
+
+  context "malformed amount value" do
+    before do
+      @ofx = OFX::Parser::Base.new("spec/fixtures/cef_malformed_decimal.ofx")
+      @parser = @ofx.parser
+    end
+
+    it "should not raise error" do
+      expect { @parser.account.transactions }.to_not raise_error
+    end
+
+    it "should return zero in amount when does not have a valid decimal" do
+      expect(@parser.account.transactions[0].amount).to eql BigDecimal('0.0')
+    end
+
+    it "should return zero in amount_in_pennies when does not have a valid decimal" do
+      expect(@parser.account.transactions[0].amount_in_pennies).to eql BigDecimal('0.0')
+    end
+  end
 end
