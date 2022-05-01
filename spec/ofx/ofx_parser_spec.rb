@@ -101,15 +101,13 @@ describe OFX::Parser do
     end
 
     it "should parse headers with CR and without LF" do
+      header = %{OFXHEADER:100\rDATA:OFXSGML\rVERSION:102\rSECURITY:NONE\rENCODING:USASCII\rCHARSET:1252\rCOMPRESSION:NONE\rOLDFILEUID:NONE\rNEWFILEUID:NONE\r}
+      body   = open("spec/fixtures/sample.ofx").read.split(/<OFX>/, 2)[1]
+      ofx_with_carriage_return = header + "<OFX>" + body
+
       @ofx = OFX::Parser::Base.new(ofx_with_carriage_return)
       @ofx.headers.size.should be(9)
     end
-  end
-
-  def ofx_with_carriage_return
-    header = %{OFXHEADER:100\rDATA:OFXSGML\rVERSION:102\rSECURITY:NONE\rENCODING:USASCII\rCHARSET:1252\rCOMPRESSION:NONE\rOLDFILEUID:NONE\rNEWFILEUID:NONE\r}
-    body   = open("spec/fixtures/sample.ofx").read.split(/<OFX>/, 2)[1]
-    header + "<OFX>" + body
   end
 
   def ofx_2_example(version)
