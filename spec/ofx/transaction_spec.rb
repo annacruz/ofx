@@ -13,43 +13,43 @@ describe OFX::Transaction do
     end
 
     it "should set amount" do
-      @transaction.amount.should == BigDecimal('-35.34')
+      expect(@transaction.amount).to eql BigDecimal('-35.34')
     end
 
     it "should cast amount to BigDecimal" do
-      @transaction.amount.class.should == BigDecimal
+      expect(@transaction.amount.class).to be BigDecimal
     end
 
     it "should set amount in pennies" do
-      @transaction.amount_in_pennies.should == -3534
+      expect(@transaction.amount_in_pennies).to eql -3534
     end
 
     it "should set fit id" do
-      @transaction.fit_id.should == "200910091"
+      expect(@transaction.fit_id).to eql "200910091"
     end
 
     it "should set memo" do
-      @transaction.memo.should == "COMPRA VISA ELECTRON"
+      expect(@transaction.memo).to eql "COMPRA VISA ELECTRON"
     end
 
     it "should set check number" do
-      @transaction.check_number.should == "0001223"
+      expect(@transaction.check_number).to eql "0001223"
     end
 
     it "should have date" do
-      @transaction.posted_at.should == Time.parse("2009-10-09 08:00:00 +0000")
+      expect(@transaction.posted_at).to eql Time.parse("2009-10-09 08:00:00 +0000")
     end
 
     it 'should have user date' do
-      @transaction.occurred_at.should == Time.parse("2009-09-09 08:00:00 +0000")
+      expect(@transaction.occurred_at).to eql Time.parse("2009-09-09 08:00:00 +0000")
     end
 
     it "should have type" do
-      @transaction.type.should == :debit
+      expect(@transaction.type).to eql :debit
     end
 
     it "should have sic" do
-      @transaction.sic.should == '5072'
+      expect(@transaction.sic).to eql '5072'
     end
   end
 
@@ -59,39 +59,39 @@ describe OFX::Transaction do
     end
 
     it "should set amount" do
-      @transaction.amount.should == BigDecimal('60.39')
+      expect(@transaction.amount).to eql BigDecimal('60.39')
     end
 
     it "should set amount in pennies" do
-      @transaction.amount_in_pennies.should == 6039
+      expect(@transaction.amount_in_pennies).to eql 6039
     end
 
     it "should set fit id" do
-      @transaction.fit_id.should == "200910162"
+      expect(@transaction.fit_id).to eql "200910162"
     end
 
     it "should set memo" do
-      @transaction.memo.should == "DEPOSITO POUP.CORRENTE"
+      expect(@transaction.memo).to eql "DEPOSITO POUP.CORRENTE"
     end
 
     it "should set check number" do
-      @transaction.check_number.should == "0880136"
+      expect(@transaction.check_number).to eql "0880136"
     end
 
     it "should have date" do
-      @transaction.posted_at.should == Time.parse("2009-10-16 08:00:00 +0000")
+      expect(@transaction.posted_at).to eql Time.parse("2009-10-16 08:00:00 +0000")
     end
 
     it "should have user date" do
-      @transaction.occurred_at.should == Time.parse("2009-09-16 08:00:00 +0000")
+      expect(@transaction.occurred_at).to eql Time.parse("2009-09-16 08:00:00 +0000")
     end
 
     it "should have type" do
-      @transaction.type.should == :credit
+      expect(@transaction.type).to eql :credit
     end
 
     it "should have empty sic" do
-      @transaction.sic.should == ''
+      expect(@transaction.sic).to eql ''
     end
   end
 
@@ -101,27 +101,27 @@ describe OFX::Transaction do
     end
 
     it "should set payee" do
-      @transaction.payee.should == "Pagto conta telefone"
+      expect(@transaction.payee).to eql "Pagto conta telefone"
     end
 
     it "should set check number" do
-      @transaction.check_number.should == "000000101901"
+      expect(@transaction.check_number).to eql "000000101901"
     end
 
     it "should have date" do
-      @transaction.posted_at.should == Time.parse("2009-10-19 12:00:00 -0300")
+      expect(@transaction.posted_at).to eql Time.parse("2009-10-19 12:00:00 -0300")
     end
 
     it "should have user date" do
-      @transaction.occurred_at.should == Time.parse("2009-10-17 12:00:00 -0300")
+      expect(@transaction.occurred_at).to eql Time.parse("2009-10-17 12:00:00 -0300")
     end
 
     it "should have type" do
-      @transaction.type.should == :other
+      expect(@transaction.type).to eql :other
     end
 
     it "should have reference number" do
-      @transaction.ref_number.should == "101.901"
+      expect(@transaction.ref_number).to eql "101.901"
     end
   end
 
@@ -131,7 +131,7 @@ describe OFX::Transaction do
     end
 
     it "should set name" do
-      @transaction.name.should == "Pagto conta telefone"
+      expect(@transaction.name).to eql "Pagto conta telefone"
     end
   end
 
@@ -144,22 +144,22 @@ describe OFX::Transaction do
 
     it "should return dep" do
       @transaction = @account.transactions[9]
-      @transaction.type.should == :dep
+      expect(@transaction.type).to eql :dep
     end
 
     it "should return xfer" do
       @transaction = @account.transactions[18]
-      @transaction.type.should == :xfer
+      expect(@transaction.type).to eql :xfer
     end
 
     it "should return cash" do
       @transaction = @account.transactions[45]
-      @transaction.type.should == :cash
+      expect(@transaction.type).to eql :cash
     end
 
     it "should return check" do
       @transaction = @account.transactions[0]
-      @transaction.type.should == :check
+      expect(@transaction.type).to eql :check
     end
   end
 
@@ -176,11 +176,11 @@ describe OFX::Transaction do
       end
 
       it "should set amount" do
-        @transaction.amount.should == BigDecimal('-11.76')
+        expect(@transaction.amount).to eql BigDecimal('-11.76')
       end
 
       it "should set amount in pennies" do
-        @transaction.amount_in_pennies.should == -1176
+        expect(@transaction.amount_in_pennies).to eql -1176
       end
     end
 
@@ -190,12 +190,31 @@ describe OFX::Transaction do
       end
 
       it "should set amount" do
-        @transaction.amount.should == BigDecimal('47.01')
+        expect(@transaction.amount).to eql BigDecimal('47.01')
       end
 
       it "should set amount in pennies" do
-        @transaction.amount_in_pennies.should == 4701
+        expect(@transaction.amount_in_pennies).to eql 4701
       end
+    end
+  end
+
+  context "invalid decimal values" do
+    before do
+      @ofx = OFX::Parser::Base.new("spec/fixtures/cef_malformed_decimal.ofx")
+      @parser = @ofx.parser
+    end
+
+    it "should not raise error" do
+      expect { @parser.account.transactions }.to_not raise_error
+    end
+
+    it "should return zero in amount" do
+      expect(@parser.account.transactions[0].amount).to eql BigDecimal('0.0')
+    end
+
+    it "should return zero in amount_in_pennies" do
+      expect(@parser.account.transactions[0].amount_in_pennies).to eql 0
     end
   end
 end
