@@ -23,8 +23,8 @@ Gem::Specification.new do |s|
   s.files         = Dir['lib/**/*.rb', 'spec/**/*.rb', 'README.rdoc', 'Rakefile']
   s.require_paths = ['lib']
   s.licenses      = ['MIT']
-
-  s.add_dependency 'nokogiri', '~> 1.13.1'
+  
+  s.add_dependency 'nokogiri', '>= 1.16.3'
   s.add_development_dependency 'byebug', '~> 11.1.3'
   s.add_development_dependency 'rake', '~> 13.0.6'
   s.add_development_dependency 'rspec', '~> 3.10'
