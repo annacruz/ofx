@@ -23,7 +23,9 @@ Gem::Specification.new do |s|
   s.files         = Dir['lib/**/*.rb', 'spec/**/*.rb', 'README.rdoc', 'Rakefile']
   s.require_paths = ['lib']
   s.licenses      = ['MIT']
-  
+
+  s.required_ruby_version = ">= 3.0.0"
+
   s.add_dependency 'nokogiri', '>= 1.16.3'
   s.add_development_dependency 'byebug', '~> 11.1.3'
   s.add_development_dependency 'rake', '~> 13.0.6'
