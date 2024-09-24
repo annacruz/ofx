@@ -25,11 +25,11 @@ Gem::Specification.new do |s|
   s.licenses      = ['MIT']
 
   s.add_dependency 'nokogiri', '~> 1.14.5'
-  s.add_dependency 'nkf', '~> 0.2.0'
-  s.add_dependency 'bigdecimal', '~> 3.1.8'
-  s.add_development_dependency 'byebug', '~> 11.1.3'
-  s.add_development_dependency 'rake', '~> 13.0.6'
-  s.add_development_dependency 'rspec', '~> 3.10'
-  s.add_development_dependency 'guard', '~> 2.18.0'
-  s.add_development_dependency 'guard-rspec', '~> 4.7.3'
+  s.add_dependency 'nkf', '0.2.0'
+  s.add_dependency 'bigdecimal', '3.1.8'
+  s.add_development_dependency 'byebug', '11.1.3'
+  s.add_development_dependency 'rake', '13.2.1'
+  s.add_development_dependency 'rspec', '3.13.0'
+  s.add_development_dependency 'guard', '2.18.1'
+  s.add_development_dependency 'guard-rspec', '4.7.3'
 end
