@@ -8,40 +8,40 @@ describe OFX::Status do
   context "success" do
     let(:ofx_file) { "spec/fixtures/creditcard.ofx" }
 
-    it "should return code" do
-      status.code.should == 0
+    it "returns code" do
+      expect(status.code).to eql 0
     end
 
-    it "should return severity" do
-      status.severity.should == :info
+    it "returns severity" do
+      expect(status.severity).to eql :info
     end
 
-    it "should return message" do
-      status.message.should == ""
+    it "returns message" do
+      expect(status.message).to eql ""
     end
 
-    it "should be successful" do
-      status.success?.should == true
+    it "is successful" do
+      expect(status.success?).to be true
     end
   end
 
   context "error" do
     let(:ofx_file) { "spec/fixtures/error.ofx" }
 
-    it "should return code" do
-      status.code.should == 2000
+    it "returns code" do
+      expect(status.code).to eql 2000
     end
 
-    it "should return severity" do
-      status.severity.should == :error
+    it "returns severity" do
+      expect(status.severity).to eql :error
     end
 
-    it "should return message" do
-      status.message.should == "We were unable to process your request. Please try again later."
+    it "returns message" do
+      expect(status.message).to eql "We were unable to process your request. Please try again later."
     end
 
-    it "should not be successful" do
-      status.success?.should == false
+    it "is not successful" do
+      expect(status.success?).to be false
     end
   end
 end

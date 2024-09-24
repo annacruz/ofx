@@ -2,20 +2,19 @@ require "spec_helper"
 
 describe OFX do
   describe "#OFX" do
-    it "should yield an OFX instance" do
+    it "creates the OFX instance" do
       OFX("spec/fixtures/sample.ofx") do |ofx|
-        ofx.class.should == OFX::Parser::OFX102
+        expect(ofx.class).to eql OFX::Parser::OFX102
       end
     end
 
-    it "should be an OFX instance" do
-      OFX("spec/fixtures/sample.ofx") do
-        self.class.should == OFX::Parser::OFX102
-      end
+    it "returns the OFX instance" do
+      ofx_instace = OFX("spec/fixtures/sample.ofx")
+      expect(ofx_instace.class).to eql OFX::Parser::OFX102
     end
 
-    it "should return parser" do
-      OFX("spec/fixtures/sample.ofx").class.should == OFX::Parser::OFX102
+    it "returns the parser" do
+      expect(OFX("spec/fixtures/sample.ofx").class).to eql OFX::Parser::OFX102
     end
   end
 end
