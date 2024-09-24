@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ofx (0.4.1)
+      nkf (~> 0.2.0)
       bigdecimal (~> 3.1.8)
       nokogiri (~> 1.14.5)
 
@@ -35,6 +36,7 @@ GEM
     method_source (1.0.0)
     mini_portile2 (2.8.7)
     nenv (0.3.0)
+    nkf (0.2.0)
     nokogiri (1.14.5)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
