@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.licenses      = ['MIT']
 
-  s.add_dependency 'nokogiri', '~> 1.14.5'
+  s.add_dependency 'nokogiri', '>= 1.14.5'
   s.add_dependency 'nkf', '0.2.0'
   s.add_dependency 'bigdecimal', '3.1.8'
   s.add_development_dependency 'byebug', '11.1.3'
