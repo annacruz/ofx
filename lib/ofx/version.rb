@@ -1,3 +1,3 @@
 module OFX
-  VERSION = '0.4.2'.freeze
+  VERSION = '0.5.1'.freeze
 end
