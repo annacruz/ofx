@@ -47,8 +47,16 @@ describe OFX::Parser do
     }.should raise_error(OFX::UnsupportedFileError)
   end
 
-  it "should use 211 parser to parse version 200 ofx files" do
-    OFX::Parser::OFX211.stub(:new).and_return('ofx-211-parser')
+  it "uses 102 parser to parse version 100 ofx files" do
+    expect(OFX::Parser::OFX102).to receive(:new).and_return('ofx-102-parser')
+
+    ofx = OFX::Parser::Base.new(ofx_2_example('100'))
+    expect(ofx.parser).to eql 'ofx-102-parser'
+  end
+
+  it "uses 211 parser to parse version 200 ofx files" do
+    expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
+
     ofx = OFX::Parser::Base.new(ofx_2_example('200'))
     ofx.parser.should == 'ofx-211-parser'
   end
@@ -57,6 +65,13 @@ describe OFX::Parser do
     OFX::Parser::OFX211.stub(:new).and_return('ofx-211-parser')
     ofx = OFX::Parser::Base.new(ofx_2_example('202'))
     ofx.parser.should == 'ofx-211-parser'
+  end
+
+  it "uses 211 parser to parse version 220 ofx files" do
+    expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
+
+    ofx = OFX::Parser::Base.new(ofx_2_example('220'))
+    expect(ofx.parser).to eql 'ofx-211-parser'
   end
 
   describe "headers" do
