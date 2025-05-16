@@ -40,7 +40,7 @@ describe OFX::Parser::OFX103 do
   it "knows about all transaction types" do
     valid_types = [
       'CREDIT', 'DEBIT', 'INT', 'DIV', 'FEE', 'SRVCHG', 'DEP', 'ATM', 'POS', 'XFER',
-      'CHECK', 'PAYMENT', 'CASH', 'DIRECTDEP', 'DIRECTDEBIT', 'REPEATPMT', 'OTHER'
+      'CHECK', 'PAYMENT', 'CASH', 'DIRECTDEP', 'DIRECTDEBIT', 'REPEATPMT', 'OTHER', 'IN', 'OUT'
     ]
     expect(valid_types.sort).to eql OFX::Parser::OFX103::TRANSACTION_TYPES.keys.sort
 
