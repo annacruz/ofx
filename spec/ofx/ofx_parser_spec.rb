@@ -47,6 +47,13 @@ describe OFX::Parser do
     }.to raise_error(OFX::UnsupportedFileError)
   end
 
+  it "uses 102 parser to parse version 100 ofx files" do
+    expect(OFX::Parser::OFX102).to receive(:new).and_return('ofx-102-parser')
+
+    ofx = OFX::Parser::Base.new(ofx_2_example('100'))
+    expect(ofx.parser).to eql 'ofx-102-parser'
+  end
+
   it "uses 211 parser to parse version 200 ofx files" do
     expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
 
@@ -58,6 +65,13 @@ describe OFX::Parser do
     expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
 
     ofx = OFX::Parser::Base.new(ofx_2_example('202'))
+    expect(ofx.parser).to eql 'ofx-211-parser'
+  end
+
+  it "uses 211 parser to parse version 220 ofx files" do
+    expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
+
+    ofx = OFX::Parser::Base.new(ofx_2_example('220'))
     expect(ofx.parser).to eql 'ofx-211-parser'
   end
 

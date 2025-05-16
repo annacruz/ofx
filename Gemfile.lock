@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ofx (0.4.1)
+    ofx (0.5.1)
       bigdecimal (= 3.1.8)
       nkf (= 0.2.0)
       nokogiri (>= 1.14.5)
