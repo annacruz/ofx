@@ -1,6 +1,17 @@
 require "spec_helper"
 
 describe OFX::Parser do
+  def ofx_example_to(version)
+    <<~OFX_CONTENT
+      <?xml version="1.0" encoding="US-ASCII"?>
+
+      <?OFX OFXHEADER="200" VERSION="#{version}" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="NONE"?>"
+
+      <OFX>
+      </OFX>
+    OFX_CONTENT
+  end
+
   before do
     @ofx = OFX::Parser::Base.new("spec/fixtures/sample.ofx")
   end
@@ -50,28 +61,35 @@ describe OFX::Parser do
   it "uses 102 parser to parse version 100 ofx files" do
     expect(OFX::Parser::OFX102).to receive(:new).and_return('ofx-102-parser')
 
-    ofx = OFX::Parser::Base.new(ofx_2_example('100'))
+    ofx = OFX::Parser::Base.new(ofx_example_to('100'))
+    expect(ofx.parser).to eql 'ofx-102-parser'
+  end
+
+  it "uses 102 parser to parse version 103 ofx files" do
+    expect(OFX::Parser::OFX102).to receive(:new).and_return('ofx-102-parser')
+
+    ofx = OFX::Parser::Base.new(ofx_example_to('103'))
     expect(ofx.parser).to eql 'ofx-102-parser'
   end
 
   it "uses 211 parser to parse version 200 ofx files" do
     expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
 
-    ofx = OFX::Parser::Base.new(ofx_2_example('200'))
+    ofx = OFX::Parser::Base.new(ofx_example_to('200'))
     expect(ofx.parser).to eql 'ofx-211-parser'
   end
 
   it "uses 211 parser to parse version 202 ofx files" do
     expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
 
-    ofx = OFX::Parser::Base.new(ofx_2_example('202'))
+    ofx = OFX::Parser::Base.new(ofx_example_to('202'))
     expect(ofx.parser).to eql 'ofx-211-parser'
   end
 
   it "uses 211 parser to parse version 220 ofx files" do
     expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
 
-    ofx = OFX::Parser::Base.new(ofx_2_example('220'))
+    ofx = OFX::Parser::Base.new(ofx_example_to('220'))
     expect(ofx.parser).to eql 'ofx-211-parser'
   end
 
@@ -124,14 +142,5 @@ describe OFX::Parser do
       @ofx = OFX::Parser::Base.new(ofx_with_carriage_return)
       expect(@ofx.headers.size).to be(9)
     end
-  end
-
-  def ofx_2_example(version)
-    <<-EndOfx
-<?xml version="1.0" encoding="US-ASCII"?>
-<?OFX OFXHEADER="200" VERSION="#{version}" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="NONE"?>"
-<OFX>
-</OFX>
-    EndOfx
   end
 end
