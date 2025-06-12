@@ -14,7 +14,7 @@ module OFX
 
       TRANSACTION_TYPES = %w[
         ATM CASH CHECK CREDIT DEBIT DEP DIRECTDEBIT DIRECTDEP DIV
-        FEE INT OTHER PAYMENT POS REPEATPMT SRVCHG XFER
+        FEE INT OTHER PAYMENT POS REPEATPMT SRVCHG XFER IN OUT
       ].each_with_object({}) do |tran_type, hash|
         hash[tran_type] = tran_type.downcase.to_sym
       end
