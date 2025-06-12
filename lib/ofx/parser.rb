@@ -17,10 +17,8 @@ module OFX
         end
 
         case headers["VERSION"]
-        when /100|102/ then
+        when /100|102|103/ then
           @parser = OFX102.new(:headers => headers, :body => body)
-        when /103/ then
-          @parser = OFX103.new(:headers => headers, :body => body)
         when /200|202|211|220/ then
           @parser = OFX211.new(:headers => headers, :body => body)
         else
