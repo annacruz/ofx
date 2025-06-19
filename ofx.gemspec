@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.licenses      = ['MIT']
 
+  s.required_ruby_version = '>= 2.5.0'
   s.add_dependency 'nokogiri', '>= 1.13.1', '< 1.16.0'
   s.add_development_dependency 'byebug', '~> 11.1.3'
   s.add_development_dependency 'rake', '~> 13.0.6'
