@@ -1,17 +1,25 @@
 name: Tests
 on:
   push:
+    branches: [main, maintanance]
+  pull_request:
+    branches: [main, maintanance]
 
 jobs:
-  rspec:
+  test:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        ruby-version: ['2.7', '2.6', '2.5', '2.4', '2.3']
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v4
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
-
-      - run: bundle exec rspec
+          bundler: '2'
+      - name: Run Tests
+        run: bundle exec rake
+      - name: Run Rubocop
+        run: bundle exec rubocop
