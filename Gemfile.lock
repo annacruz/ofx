@@ -16,6 +16,8 @@ GEM
       cgi (>= 0.3.3)
     nokogiri (1.15.7-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.15.7-x86_64-linux)
+      racc (~> 1.4)
     racc (1.8.1)
     rake (13.0.6)
     rspec (3.13.1)
@@ -35,6 +37,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  x86_64-linux
 
 DEPENDENCIES
   byebug (~> 11.1.3)
