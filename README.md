@@ -5,7 +5,7 @@
 A simple OFX (Open Financial Exchange) parser built on top of Nokogiri.
 Currently supports both OFX 1.0.2, 1.0.3 and 2.1.1.
 
-Works on both ruby 1.9 and 2.0.
+Works on ruby 2.3.
 
 ## Usage
 
