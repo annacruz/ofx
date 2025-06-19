@@ -8,17 +8,10 @@ Gem::Specification.new do |s|
   s.authors     = ['Nando Vieira', 'Anna Cruz']
   s.email       = ['fnando.vieira@gmail.com', 'anna.cruz@gmail.com']
   s.homepage    = 'http://rubygems.org/gems/ofx'
-  s.summary     = 'A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports OFX 102, 200 and 211.'
-  s.description = <<~TXT
-    A simple OFX (Open Financial Exchange) parser built on top of Nokogiri.
-    Currently supports OFX 102, 200 and 211.
-
-    Usage:
-
-      OFX('sample.ofx') do |ofx|
-        p ofx
-      end
-  TXT
+  s.summary     = 'A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports OFX 102, 103, 200 and 211.'
+  s.description = 'A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. ' \
+                'Currently supports OFX 102, 200 and 211. ' \
+                'Usage: OFX(\'sample.ofx\') do |ofx|; p ofx; end'
 
   s.files         = Dir['lib/**/*.rb', 'spec/**/*.rb', 'README.rdoc', 'Rakefile']
   s.require_paths = ['lib']
