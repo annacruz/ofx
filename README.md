@@ -21,6 +21,25 @@ end
 
 Invalid files will raise an OFX::UnsupportedFileError.
 
+## Deploy
+
+### New version
+
+1. New version at `lib/ofx/version.rb`;
+2. Execute `$ bundle`;
+3. Commit and push to Github;
+
+### Release at Github
+
+1. Create a [new release on Github](https://github.com/asseinfo/ofx/releases/new)
+1. Fill the **the new tag**. Ex.: v4.0.1
+1. Target `main`
+1. Fill the **Release title**. Ex.: 4.0.1 (March 3, 2020)
+1. Click at **Generate release notes**
+1. Click at **Publish release**
+
+  [Reference here](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository)
+
 ## Creator
 
 - Nando Vieira - [simplesideias.com.br](http://simplesideias.com.br)
