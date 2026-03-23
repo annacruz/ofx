@@ -7,32 +7,32 @@ describe OFX::Parser::OFX211 do
   end
 
   it "should have a version" do
-    OFX::Parser::OFX211::VERSION.should == "2.1.1"
+    expect(OFX::Parser::OFX211::VERSION).to eql "2.1.1"
   end
 
   it "should set headers" do
-    @parser.headers.should == @ofx.headers
+    expect(@parser.headers).to eql @ofx.headers
   end
 
   it "should set body" do
-    @parser.body.should == @ofx.body
+    expect(@parser.body).to eql @ofx.body
   end
 
   it "should set account" do
-    @parser.account.should be_a_kind_of(OFX::Account)
+    expect(@parser.account).to be_a_kind_of(OFX::Account)
   end
 
   it "should set account" do
-    @parser.sign_on.should be_a_kind_of(OFX::SignOn)
+    expect(@parser.sign_on).to be_a_kind_of(OFX::SignOn)
   end
 
   it "should set accounts" do
-    @parser.accounts.size.should == 2
+    expect(@parser.accounts.size).to eql 2
   end
 
   it "should set statements" do
-    @parser.statements.size.should == 2
-    @parser.statements.first.should be_a_kind_of(OFX::Statement)
+    expect(@parser.statements.size).to eql 2
+    expect(@parser.statements.first).to be_a_kind_of(OFX::Statement)
   end
 
   context "transactions" do
@@ -44,11 +44,11 @@ describe OFX::Parser::OFX211 do
       end
 
       it "should contain the correct values" do
-        @t.amount.should == BigDecimal('-80')
-        @t.fit_id.should == "219378"
-        @t.memo.should be_empty
-        @t.posted_at.should == Time.parse("2005-08-24 08:00:00 +0000")
-        @t.name.should == "FrogKick Scuba Gear"
+        expect(@t.amount).to eql BigDecimal('-80')
+        expect(@t.fit_id).to eql "219378"
+        expect(@t.memo).to be_empty
+        expect(@t.posted_at).to eql Time.parse("2005-08-24 08:00:00 +0000")
+        expect(@t.name).to eql "FrogKick Scuba Gear"
       end
     end
 
@@ -58,11 +58,11 @@ describe OFX::Parser::OFX211 do
       end
 
       it "should contain the correct values" do
-        @t.amount.should == BigDecimal('-23')
-        @t.fit_id.should == "219867"
-        @t.memo.should be_empty
-        @t.posted_at.should == Time.parse("2005-08-11 08:00:00 +0000")
-        @t.name.should == "Interest Charge"
+        expect(@t.amount).to eql BigDecimal('-23')
+        expect(@t.fit_id).to eql "219867"
+        expect(@t.memo).to be_empty
+        expect(@t.posted_at).to eql Time.parse("2005-08-11 08:00:00 +0000")
+        expect(@t.name).to eql "Interest Charge"
       end
     end
 
@@ -72,13 +72,12 @@ describe OFX::Parser::OFX211 do
       end
 
       it "should contain the correct values" do
-        @t.amount.should == BigDecimal('350')
-        @t.fit_id.should == "219868"
-        @t.memo.should be_empty
-        @t.posted_at.should == Time.parse("2005-08-11 08:00:00 +0000")
-        @t.name.should == "Payment - Thank You"
+        expect(@t.amount).to eql BigDecimal('350')
+        expect(@t.fit_id).to eql "219868"
+        expect(@t.memo).to be_empty
+        expect(@t.posted_at).to eql Time.parse("2005-08-11 08:00:00 +0000")
+        expect(@t.name).to eql "Payment - Thank You"
       end
     end
   end
 end
-
