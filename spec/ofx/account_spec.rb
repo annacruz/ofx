@@ -8,53 +8,53 @@ describe OFX::Account do
   end
 
   describe "account" do
-    it "should return currency" do
+    it "returns currency" do
       expect(@account.currency).to eql "BRL"
     end
 
-    it "should return bank id" do
+    it "returns bank id" do
       expect(@account.bank_id).to eql "0356"
     end
 
-    it "should return id" do
+    it "returns id" do
       expect(@account.id).to eql "03227113109"
     end
 
-    it "should return type" do
+    it "returns type" do
       expect(@account.type).to eql :checking
     end
 
-    it "should return transactions" do
+    it "returns transactions" do
       expect(@account.transactions).to be_a_kind_of(Array)
       expect(@account.transactions.size).to eql 36
     end
 
-    it "should return balance" do
+    it "returns balance" do
       expect(@account.balance.amount).to eql BigDecimal('598.44')
     end
 
-    it "should return balance in pennies" do
+    it "returns balance in pennies" do
       expect(@account.balance.amount_in_pennies).to eql 59844
     end
 
-    it "should return balance date" do
+    it "returns balance date" do
       expect(@account.balance.posted_at).to eql Time.gm(2009,11,1)
     end
 
     context "available_balance" do
-      it "should return available balance" do
+      it "returns available balance" do
         expect(@account.available_balance.amount).to eql BigDecimal('1555.99')
       end
 
-      it "should return available balance in pennies" do
+      it "returns available balance in pennies" do
         expect(@account.available_balance.amount_in_pennies).to eql 155599
       end
 
-      it "should return available balance date" do
+      it "returns available balance date" do
         expect(@account.available_balance.posted_at).to eql Time.gm(2009,11,1)
       end
 
-      it "should return nil if AVAILBAL not found" do
+      it "returns nil if AVAILBAL not found" do
         @ofx = OFX::Parser::Base.new("spec/fixtures/utf8.ofx")
         @parser = @ofx.parser
         @account = @parser.account
@@ -69,11 +69,11 @@ describe OFX::Account do
         @account = @parser.account
       end
 
-      it "should return id" do
+      it "returns id" do
         expect(@account.id).to eql "XXXXXXXXXXXX1111"
       end
 
-      it "should return currency" do
+      it "returns currency" do
         expect(@account.currency).to eql "USD"
       end
     end
@@ -84,7 +84,7 @@ describe OFX::Account do
         @account = @parser.account
       end
 
-      it "should return nil for date balance" do
+      it "returns nil for date balance" do
         expect(@account.balance.posted_at).to be_nil
       end
     end
@@ -94,10 +94,10 @@ describe OFX::Account do
         @ofx = OFX::Parser::Base.new("spec/fixtures/bradesco.ofx")
         @parser = @ofx.parser
       end
-      it "should not raise error when balance has date zero" do
+      it "does not raise error when balance has date zero" do
         expect { @parser.account.balance }.to_not raise_error
       end
-      it "should return NIL in balance.posted_at when balance date is zero" do
+      it "returns NIL in balance.posted_at when balance date is zero" do
         expect(@parser.account.balance.posted_at).to be_nil
       end
     end
@@ -109,20 +109,20 @@ describe OFX::Account do
         @account = @parser.account
       end
 
-      it "should return balance" do
+      it "returns balance" do
         expect(@account.balance.amount).to eql BigDecimal('348.29')
       end
 
-      it "should return balance in pennies" do
+      it "returns balance in pennies" do
         expect(@account.balance.amount_in_pennies).to eql 34829
       end
 
       context "available_balance" do
-        it "should return available balance" do
+        it "returns available balance" do
           expect(@account.available_balance.amount).to eql BigDecimal('2415.87')
         end
 
-        it "should return available balance in pennies" do
+        it "returns available balance in pennies" do
           expect(@account.available_balance.amount_in_pennies).to eql 241587
         end
       end
