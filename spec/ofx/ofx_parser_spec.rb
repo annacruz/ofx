@@ -16,88 +16,88 @@ describe OFX::Parser do
     @ofx = OFX::Parser::Base.new("spec/fixtures/sample.ofx")
   end
 
-  it "should accept file path" do
+  it "accepts file path" do
     @ofx = OFX::Parser::Base.new("spec/fixtures/sample.ofx")
     expect(@ofx.content).not_to be_nil
   end
 
-  it "should accept file handler" do
+  it "accepts file handler" do
     file = open("spec/fixtures/sample.ofx")
     @ofx = OFX::Parser::Base.new(file)
     expect(@ofx.content).not_to be_nil
   end
 
-  it "should accept file content" do
+  it "accepts file content" do
     file = open("spec/fixtures/sample.ofx").read
     @ofx = OFX::Parser::Base.new(file)
     expect(@ofx.content).not_to be_nil
   end
 
-  it "should set content" do
+  it "sets content" do
     expect(@ofx.content).to eql open("spec/fixtures/sample.ofx").read
   end
 
-  it "should work with UTF8 and Latin1 encodings" do
+  it "works with UTF8 and Latin1 encodings" do
     @ofx = OFX::Parser::Base.new("spec/fixtures/utf8.ofx")
     expect(@ofx.content).to eql open("spec/fixtures/utf8.ofx").read
   end
 
-  it "should set body" do
+  it "sets body" do
     expect(@ofx.body).not_to be_nil
   end
 
-  it "should raise exception when trying to parse an unsupported OFX version" do
+  it "raises exception when trying to parse an unsupported OFX version" do
     expect {
       OFX::Parser::Base.new("spec/fixtures/invalid_version.ofx")
     }.to raise_error(OFX::UnsupportedFileError)
   end
 
-  it "should raise exception when trying to parse an invalid file" do
+  it "raises exception when trying to parse an invalid file" do
     expect {
       OFX::Parser::Base.new("spec/fixtures/avatar.gif")
     }.to raise_error(OFX::UnsupportedFileError)
   end
 
-  it "should use 102 parser to parse version 100 ofx files" do
+  it "uses 102 parser to parse version 100 ofx files" do
     expect(OFX::Parser::OFX102).to receive(:new).and_return('ofx-102-parser')
 
     ofx = OFX::Parser::Base.new(ofx_example_to('100'))
     expect(ofx.parser).to eql 'ofx-102-parser'
   end
 
-  it "should use 102 parser to parse version 102 ofx files" do
+  it "uses 102 parser to parse version 102 ofx files" do
     expect(OFX::Parser::OFX102).to receive(:new).and_return('ofx-102-parser')
 
     ofx = OFX::Parser::Base.new(ofx_example_to('102'))
     expect(ofx.parser).to eql 'ofx-102-parser'
   end
 
-  it "should use 102 parser to parse version 103 ofx files" do
+  it "uses 102 parser to parse version 103 ofx files" do
     expect(OFX::Parser::OFX102).to receive(:new).and_return('ofx-102-parser')
 
     ofx = OFX::Parser::Base.new(ofx_example_to('103'))
     expect(ofx.parser).to eql 'ofx-102-parser'
   end
 
-  it "should use 211 parser to parse version 200 ofx files" do
+  it "uses 211 parser to parse version 200 ofx files" do
     allow(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
     ofx = OFX::Parser::Base.new(ofx_example_to('200'))
     expect(ofx.parser).to eql 'ofx-211-parser'
   end
 
-  it "should use 211 parser to parse version 202 ofx files" do
+  it "uses 211 parser to parse version 202 ofx files" do
     allow(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
     ofx = OFX::Parser::Base.new(ofx_example_to('202'))
     expect(ofx.parser).to eql 'ofx-211-parser'
   end
 
-  it "should use 211 parser to parse version 211 ofx files" do
+  it "uses 211 parser to parse version 211 ofx files" do
     allow(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
     ofx = OFX::Parser::Base.new(ofx_example_to('211'))
     expect(ofx.parser).to eql 'ofx-211-parser'
   end
 
-  it "should use 211 parser to parse version 220 ofx files" do
+  it "uses 211 parser to parse version 220 ofx files" do
     expect(OFX::Parser::OFX211).to receive(:new).and_return('ofx-211-parser')
 
     ofx = OFX::Parser::Base.new(ofx_example_to('220'))
@@ -105,47 +105,47 @@ describe OFX::Parser do
   end
 
   describe "headers" do
-    it "should have OFXHEADER" do
+    it "has OFXHEADER" do
       expect(@ofx.headers["OFXHEADER"]).to eql "100"
     end
 
-    it "should have DATA" do
+    it "has DATA" do
       expect(@ofx.headers["DATA"]).to eql "OFXSGML"
     end
 
-    it "should have VERSION" do
+    it "has VERSION" do
       expect(@ofx.headers["VERSION"]).to eql "102"
     end
 
-    it "should have SECURITY" do
+    it "has SECURITY" do
       expect(@ofx.headers).to have_key("SECURITY")
       expect(@ofx.headers["SECURITY"]).to be_nil
     end
 
-    it "should have ENCODING" do
+    it "has ENCODING" do
       expect(@ofx.headers["ENCODING"]).to eql "USASCII"
     end
 
-    it "should have CHARSET" do
+    it "has CHARSET" do
       expect(@ofx.headers["CHARSET"]).to eql "1252"
     end
 
-    it "should have COMPRESSION" do
+    it "has COMPRESSION" do
       expect(@ofx.headers).to have_key("COMPRESSION")
       expect(@ofx.headers["COMPRESSION"]).to be_nil
     end
 
-    it "should have OLDFILEUID" do
+    it "has OLDFILEUID" do
       expect(@ofx.headers).to have_key("OLDFILEUID")
       expect(@ofx.headers["OLDFILEUID"]).to be_nil
     end
 
-    it "should have NEWFILEUID" do
+    it "has NEWFILEUID" do
       expect(@ofx.headers).to have_key("NEWFILEUID")
       expect(@ofx.headers["NEWFILEUID"]).to be_nil
     end
 
-    it "should parse headers with CR and without LF" do
+    it "parses headers with CR and without LF" do
       header = %{OFXHEADER:100\rDATA:OFXSGML\rVERSION:102\rSECURITY:NONE\rENCODING:USASCII\rCHARSET:1252\rCOMPRESSION:NONE\rOLDFILEUID:NONE\rNEWFILEUID:NONE\r}
       body   = open("spec/fixtures/sample.ofx").read.split(/<OFX>/, 2)[1]
       ofx_with_carriage_return = header + "<OFX>" + body
