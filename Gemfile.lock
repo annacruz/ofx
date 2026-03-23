@@ -3,7 +3,7 @@ PATH
   specs:
     ofx (0.3.8)
       erb (~> 4.0.4)
-      nokogiri (>= 1.13.1, < 1.19.2)
+      nokogiri (>= 1.13.1, < 1.19.3)
       stringio (~> 3.1.7)
 
 GEM
@@ -14,9 +14,9 @@ GEM
     diff-lcs (1.6.2)
     erb (4.0.4)
       cgi (>= 0.3.3)
-    mini_portile2 (2.8.9)
-    nokogiri (1.18.10)
-      mini_portile2 (~> 2.8.2)
+    nokogiri (1.19.1-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.19.1-x86_64-linux-gnu)
       racc (~> 1.4)
     racc (1.8.1)
     rake (13.0.6)
