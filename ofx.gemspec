@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.licenses      = ['MIT']
 
   s.add_dependency 'nokogiri', '>= 1.13.1', '< 1.19.2'
-  s.add_development_dependency 'byebug', '~> 11.1.3'
+  s.add_development_dependency 'byebug', '~> 13.0.0'
   s.add_development_dependency 'rake', '~> 13.0.6'
   s.add_development_dependency 'rspec', '~> 3.10'
   s.add_dependency 'erb', '~> 4.0.4'
