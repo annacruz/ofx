@@ -4,7 +4,7 @@ PATH
     ofx (0.3.8)
       erb (~> 4.0.4)
       nokogiri (>= 1.13.1, < 1.19.2)
-      stringio (~> 3.1.7)
+      stringio (>= 3.1.7, < 3.3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -33,7 +33,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.4)
-    stringio (3.1.9)
+    stringio (3.2.0)
 
 PLATFORMS
   arm64-darwin-24
