@@ -28,6 +28,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'byebug', '~> 11.1.3'
   s.add_development_dependency 'rake', '~> 13.0.6'
   s.add_development_dependency 'rspec', '~> 3.10'
+  s.add_development_dependency 'guard', '~> 2.20'
+  s.add_development_dependency 'guard-rspec', '~> 4.7'
   s.add_dependency 'erb', '~> 4.0.4'
   s.add_dependency 'stringio', '~> 3.1.7'
 end
