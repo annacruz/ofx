@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ofx (0.3.8)
+    ofx (1.0.0)
       erb (~> 4.0.4)
       nokogiri (>= 1.13.1, < 1.19.2)
       stringio (~> 3.1.7)

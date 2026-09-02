@@ -12,12 +12,25 @@ Works on both ruby 1.9 and 2.0.
   require "ofx"
 
   OFX("file.ofx") do
-    p account
-    p account.balance
-    p account.transactions
+    p accounts
+    p accounts.first.balance
+    p accounts.first.transactions
   end
 
 Invalid files will raise an OFX::UnsupportedFileError.
+
+== Upgrading to 1.0.0
+
+The deprecated singular +account+ parser method has been removed because it
+silently ignored additional accounts. Use +accounts+ and select the desired
+account explicitly. Applications upgrading from 0.x should review this API
+change before deploying.
+
+== Supported OFX versions
+
+OFX 1.0.0, 1.0.2, and 1.0.3 are parsed as SGML. OFX 2.0.0, 2.0.2,
+2.1.1, and 2.2.0 are parsed as XML. The parser supports bank and credit-card
+statements; investment statements and other OFX aggregates are not supported.
 
 == Creator
 

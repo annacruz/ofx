@@ -23,8 +23,12 @@ describe OFX::Parser::OFX102 do
     expect(@parser.body).to eql @ofx.body
   end
 
-  it "sets account" do
-    expect(@parser.account).to be_a_kind_of(OFX::Account)
+  it "sets accounts" do
+    expect(@parser.accounts.first).to be_a_kind_of(OFX::Account)
+  end
+
+  it "does not expose the deprecated singular account API" do
+    expect(@parser).not_to respond_to(:account)
   end
 
   it "sets sign_on" do
