@@ -36,7 +36,7 @@ GEM
     stringio (3.1.9)
 
 PLATFORMS
-  arm64-darwin-24
+  arm64-darwin
   x86_64-linux
 
 DEPENDENCIES
@@ -46,4 +46,4 @@ DEPENDENCIES
   rspec (~> 3.10)
 
 BUNDLED WITH
-   2.3.3
+  4.0.8
