@@ -6,31 +6,31 @@ describe OFX::Parser::OFX211 do
     @parser = @ofx.parser
   end
 
-  it "should have a version" do
+  it "has a version" do
     expect(OFX::Parser::OFX211::VERSION).to eql "2.1.1"
   end
 
-  it "should set headers" do
+  it "sets headers" do
     expect(@parser.headers).to eql @ofx.headers
   end
 
-  it "should set body" do
+  it "sets body" do
     expect(@parser.body).to eql @ofx.body
   end
 
-  it "should set account" do
+  it "sets account" do
     expect(@parser.account).to be_a_kind_of(OFX::Account)
   end
 
-  it "should set account" do
+  it "sets sign_on" do
     expect(@parser.sign_on).to be_a_kind_of(OFX::SignOn)
   end
 
-  it "should set accounts" do
+  it "sets accounts" do
     expect(@parser.accounts.size).to eql 2
   end
 
-  it "should set statements" do
+  it "sets statements" do
     expect(@parser.statements.size).to eql 2
     expect(@parser.statements.first).to be_a_kind_of(OFX::Statement)
   end
@@ -43,7 +43,7 @@ describe OFX::Parser::OFX211 do
         @t = @parser.accounts[0].transactions[0]
       end
 
-      it "should contain the correct values" do
+      it "contains the correct values" do
         expect(@t.amount).to eql BigDecimal('-80')
         expect(@t.fit_id).to eql "219378"
         expect(@t.memo).to be_empty
@@ -57,7 +57,7 @@ describe OFX::Parser::OFX211 do
         @t = @parser.accounts[1].transactions[0]
       end
 
-      it "should contain the correct values" do
+      it "contains the correct values" do
         expect(@t.amount).to eql BigDecimal('-23')
         expect(@t.fit_id).to eql "219867"
         expect(@t.memo).to be_empty
@@ -71,7 +71,7 @@ describe OFX::Parser::OFX211 do
         @t = @parser.accounts[1].transactions[1]
       end
 
-      it "should contain the correct values" do
+      it "contains the correct values" do
         expect(@t.amount).to eql BigDecimal('350')
         expect(@t.fit_id).to eql "219868"
         expect(@t.memo).to be_empty
