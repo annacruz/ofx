@@ -19,6 +19,21 @@ Works on both ruby 1.9 and 2.0.
 
 Invalid files will raise an OFX::UnsupportedFileError.
 
+== Development
+
+Install the dependencies and run the test suite:
+
+  bundle install
+  bundle exec rspec
+
+To run relevant specs automatically when files under +lib/+ or +spec/+ change:
+
+  bundle exec guard
+
+Run the code-quality checks with:
+
+  bundle exec rubocop
+
 == Creator
 
 * Nando Vieira - http://simplesideias.com.br
