@@ -32,6 +32,21 @@ OFX 1.0.0, 1.0.2, and 1.0.3 are parsed as SGML. OFX 2.0.0, 2.0.2,
 2.1.1, and 2.2.0 are parsed as XML. The parser supports bank and credit-card
 statements; investment statements and other OFX aggregates are not supported.
 
+== Development
+
+Install the dependencies and run the test suite:
+
+  bundle install
+  bundle exec rspec
+
+To run relevant specs automatically when files under +lib/+ or +spec/+ change:
+
+  bundle exec guard
+
+Run the code-quality checks with:
+
+  bundle exec rubocop
+
 == Creator
 
 * Nando Vieira - http://simplesideias.com.br
