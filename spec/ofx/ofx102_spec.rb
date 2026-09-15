@@ -24,6 +24,7 @@ describe OFX::Parser::OFX102 do
   end
 
   it "sets accounts" do
+    expect(@parser.accounts.size).to eql 1
     expect(@parser.accounts.first).to be_a_kind_of(OFX::Account)
   end
 

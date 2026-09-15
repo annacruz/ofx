@@ -18,16 +18,14 @@ describe OFX::Parser::OFX211 do
     expect(@parser.body).to eql @ofx.body
   end
 
-  it "sets accounts" do
-    expect(@parser.accounts.first).to be_a_kind_of(OFX::Account)
-  end
-
   it "sets sign_on" do
     expect(@parser.sign_on).to be_a_kind_of(OFX::SignOn)
   end
 
   it "sets accounts" do
     expect(@parser.accounts.size).to eql 2
+    expect(@parser.accounts.first).to be_a_kind_of(OFX::Account)
+    expect(@parser.accounts.last).to be_a_kind_of(OFX::Account)
   end
 
   it "sets statements" do
