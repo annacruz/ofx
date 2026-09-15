@@ -3,9 +3,9 @@
 {<img src="https://badge.fury.io/rb/ofx.svg" alt="Gem Version" />}[https://badge.fury.io/rb/ofx]
 {<img src="https://github.com/annacruz/ofx/actions/workflows/config.yml/badge.svg" alt="Build Status" />}[https://github.com/annacruz/ofx/actions]
 
-A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports both OFX 1.0.2 and 2.1.1.
+A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Supports OFX 1.x (SGML) and 2.x (XML); see "Supported OFX versions" below.
 
-Works on both ruby 1.9 and 2.0.
+Requires Ruby 3.1 or newer.
 
 == Usage
 
