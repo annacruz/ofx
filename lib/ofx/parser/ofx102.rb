@@ -41,11 +41,6 @@ module OFX
         @accounts ||= html.search('stmttrnrs, ccstmttrnrs').collect { |node| build_account(node) }
       end
 
-      # DEPRECATED: kept for legacy support
-      def account
-        @account ||= build_account(html.search('stmttrnrs, ccstmttrnrs').first)
-      end
-
       def sign_on
         @sign_on ||= build_sign_on
       end

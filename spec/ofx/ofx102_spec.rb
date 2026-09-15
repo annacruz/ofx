@@ -23,8 +23,9 @@ describe OFX::Parser::OFX102 do
     expect(@parser.body).to eql @ofx.body
   end
 
-  it "sets account" do
-    expect(@parser.account).to be_a_kind_of(OFX::Account)
+  it "sets accounts" do
+    expect(@parser.accounts.size).to eql 1
+    expect(@parser.accounts.first).to be_a_kind_of(OFX::Account)
   end
 
   it "sets sign_on" do
