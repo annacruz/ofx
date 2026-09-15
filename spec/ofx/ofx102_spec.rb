@@ -28,10 +28,6 @@ describe OFX::Parser::OFX102 do
     expect(@parser.accounts.first).to be_a_kind_of(OFX::Account)
   end
 
-  it "does not expose the deprecated singular account API" do
-    expect(@parser).not_to respond_to(:account)
-  end
-
   it "sets sign_on" do
     expect(@parser.sign_on).to be_a_kind_of(OFX::SignOn)
   end

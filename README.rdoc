@@ -19,13 +19,6 @@ Requires Ruby 3.1 or newer.
 
 Invalid files will raise an OFX::UnsupportedFileError.
 
-== Upgrading to 1.0.0
-
-The deprecated singular +account+ parser method has been removed because it
-silently ignored additional accounts. Use +accounts+ and select the desired
-account explicitly. Applications upgrading from 0.x should review this API
-change before deploying.
-
 == Supported OFX versions
 
 OFX 1.0.0, 1.0.2, and 1.0.3 are parsed as SGML. OFX 2.0.0, 2.0.2,
