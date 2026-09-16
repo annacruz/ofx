@@ -38,5 +38,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop-rspec', '~> 3.5.0'
   s.add_dependency 'erb', '~> 4.0.4'
   s.add_dependency 'nkf'
-  s.add_dependency 'stringio', '~> 3.1.7'
+  s.add_dependency 'stringio', '>= 3.1.7', '< 3.3.0'
 end
