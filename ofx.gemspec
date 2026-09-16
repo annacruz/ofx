@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'nokogiri', '>= 1.13.1', '< 1.19.2'
   s.add_dependency 'bigdecimal'
-  s.add_development_dependency 'byebug', '~> 11.1.3'
+  s.add_development_dependency 'byebug', '~> 12.0.0'
   s.add_development_dependency 'rake', '~> 13.0.6'
   s.add_development_dependency 'rspec', '~> 3.10'
   s.add_development_dependency 'guard', '~> 2.20'
@@ -38,5 +38,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop-rspec', '~> 3.5.0'
   s.add_dependency 'erb', '>= 4.0.4', '< 6.1.0'
   s.add_dependency 'nkf'
-  s.add_dependency 'stringio', '~> 3.1.7'
+  s.add_dependency 'stringio', '>= 3.1.7', '< 3.3.0'
 end
