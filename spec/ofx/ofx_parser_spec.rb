@@ -33,6 +33,10 @@ describe OFX::Parser do
     expect(@ofx.content).not_to be_nil
   end
 
+  it "does not treat content starting with a pipe as a shell command" do
+    expect { OFX::Parser::Base.new("|echo should-not-run") }.to raise_error(OFX::UnsupportedFileError)
+  end
+
   it "sets content" do
     expect(@ofx.content).to eql open("spec/fixtures/sample.ofx").read
   end
