@@ -110,7 +110,7 @@ GEM
     rubocop-rake (0.7.1)
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1)
-    rubocop-rspec (3.5.0)
+    rubocop-rspec (3.7.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
@@ -135,7 +135,7 @@ DEPENDENCIES
   rubocop (~> 1.75.5)
   rubocop-performance (~> 1.26.1)
   rubocop-rake (~> 0.7.1)
-  rubocop-rspec (~> 3.5.0)
+  rubocop-rspec (~> 3.7.0)
 
 BUNDLED WITH
   4.0.8
