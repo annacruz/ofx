@@ -34,6 +34,10 @@ Run the code-quality checks with:
 
   bundle exec rubocop
 
+Check the locked dependencies against the Ruby advisory database with:
+
+  bundle exec bundler-audit check --update
+
 == Creator
 
 * Nando Vieira - http://simplesideias.com.br
