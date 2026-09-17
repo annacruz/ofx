@@ -3,21 +3,27 @@
 {<img src="https://badge.fury.io/rb/ofx.svg" alt="Gem Version" />}[https://badge.fury.io/rb/ofx]
 {<img src="https://github.com/annacruz/ofx/actions/workflows/config.yml/badge.svg" alt="Build Status" />}[https://github.com/annacruz/ofx/actions]
 
-A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Currently supports both OFX 1.0.2 and 2.1.1.
+A simple OFX (Open Financial Exchange) parser built on top of Nokogiri. Supports OFX 1.x (SGML) and 2.x (XML); see "Supported OFX versions" below.
 
-Works on both ruby 1.9 and 2.0.
+Requires Ruby 3.1 or newer.
 
 == Usage
 
   require "ofx"
 
   OFX("file.ofx") do
-    p account
-    p account.balance
-    p account.transactions
+    p accounts
+    p accounts.first.balance
+    p accounts.first.transactions
   end
 
 Invalid files will raise an OFX::UnsupportedFileError.
+
+== Supported OFX versions
+
+OFX 1.0.0, 1.0.2, and 1.0.3 are parsed as SGML. OFX 2.0.0, 2.0.2,
+2.1.1, and 2.2.0 are parsed as XML. The parser supports bank and credit-card
+statements; investment statements and other OFX aggregates are not supported.
 
 == Development
 
