@@ -21,7 +21,7 @@ Invalid files will raise an OFX::UnsupportedFileError.
 
 == Development
 
-Install the dependencies and run the test suite:
+Development dependencies (RSpec, Guard, RuboCop, ...) are declared in the +Gemfile+; the gemspec only lists what the gem needs at runtime. Install the dependencies and run the test suite:
 
   bundle install
   bundle exec rspec
