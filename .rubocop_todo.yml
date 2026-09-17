@@ -348,14 +348,13 @@ Style/MultilineWhenThen:
   Exclude:
     - 'lib/ofx/parser.rb'
 
-# Offense count: 2
+# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: literals, strict
 Style/MutableConstant:
   Exclude:
     - 'lib/ofx/parser/ofx211.rb'
-    - 'lib/ofx/version.rb'
 
 # Offense count: 8
 # This cop supports safe autocorrection (--autocorrect).
