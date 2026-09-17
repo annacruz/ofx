@@ -1,3 +1,10 @@
+require "simplecov"
+SimpleCov.start do
+  enable_coverage :branch
+  add_filter "/spec/"
+  minimum_coverage line: 99, branch: 87
+end
+
 require "ofx"
 require "byebug"
 
