@@ -3,15 +3,17 @@
 # Builds a Markdown report of the SimpleCov run for a pull request comment.
 # Usage: ruby .github/scripts/coverage_comment.rb [coverage/.resultset.json] [coverage/rspec.json]
 #
-# Exit status: 0 when every line and branch is covered; 10 when the report
-# lists uncovered code and should be posted; 11 when the suite did not
-# finish or had failing examples, so coverage is not meaningful.
+# Exit status tells the caller what to do with the output:
+#   EXIT_FULLY_COVERED (0)          every line and branch under lib/ is covered; nothing to post
+#   EXIT_UNCOVERED_CODE (10)        stdout holds the report of uncovered code; post it
+#   EXIT_COVERAGE_NOT_MEANINGFUL (11) the suite did not finish or had failures; ignore coverage
 
 require 'json'
 
 MARKER = '<!-- simplecov-report -->'
-REPORT = 10
-SKIPPED = 11
+EXIT_FULLY_COVERED = 0
+EXIT_UNCOVERED_CODE = 10
+EXIT_COVERAGE_NOT_MEANINGFUL = 11
 
 def pct(covered, total)
   return '100.0%' if total.zero?
@@ -24,14 +26,14 @@ rspec_path = ARGV.fetch(1, 'coverage/rspec.json')
 
 unless File.exist?(rspec_path)
   warn "#{rspec_path} not found: the suite did not finish, skipping the coverage report"
-  exit SKIPPED
+  exit EXIT_COVERAGE_NOT_MEANINGFUL
 end
 
 summary = JSON.parse(File.read(rspec_path)).fetch('summary')
 failures = summary.fetch('failure_count') + summary.fetch('errors_outside_of_examples_count')
 unless failures.zero?
   warn "#{failures} failing example(s): coverage is not meaningful, skipping the coverage report"
-  exit SKIPPED
+  exit EXIT_COVERAGE_NOT_MEANINGFUL
 end
 
 coverage = JSON.parse(File.read(path)).values.first.fetch('coverage')
@@ -58,7 +60,7 @@ coverage.sort.each do |file, data|
   gaps << [file.delete_prefix(root), missed_lines, missed_branches]
 end
 
-exit 0 if gaps.empty?
+exit EXIT_FULLY_COVERED if gaps.empty?
 
 puts MARKER
 puts '## Test coverage'
@@ -75,4 +77,4 @@ puts '|--|--|--:|'
 gaps.each do |file, lines, branches|
   puts "| `#{file}` | #{lines.empty? ? '—' : lines.join(', ')} | #{branches} |"
 end
-exit REPORT
+exit EXIT_UNCOVERED_CODE
