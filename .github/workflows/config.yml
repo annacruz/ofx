@@ -31,15 +31,15 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
       - name: Run Tests
-        run: bundle exec rspec
-      - name: Comment test coverage on the pull request
+        run: bundle exec rspec --format progress --format json --out coverage/rspec.json
+      - name: Comment uncovered code on the pull request
         if: always() && github.event_name == 'pull_request' && matrix.ruby-version == '3.4'
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          ruby .github/scripts/coverage_comment.rb > coverage/comment.md
-          gh pr comment "${{ github.event.pull_request.number }}" --body-file coverage/comment.md --edit-last \
-            || gh pr comment "${{ github.event.pull_request.number }}" --body-file coverage/comment.md
+          ruby .github/scripts/coverage_comment.rb > coverage/comment.md && exit 0
+          [ $? -eq 10 ] || exit 1
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file coverage/comment.md
       - name: Run RuboCop
         run: bundle exec rubocop
