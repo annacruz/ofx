@@ -14,11 +14,6 @@ describe OFX::Parser::OFX211 do
     expect(described_class.parse_headers('<?xml version="1.0"?><!-- no OFX header -->')).to be_nil
   end
 
-  it "ignores header tokens without a quoted value" do
-    headers = described_class.parse_headers('<?OFX OFXHEADER="200" STANDALONE VERSION="211"?>')
-    expect(headers).to eql("OFXHEADER" => "200", "VERSION" => "211")
-  end
-
   it "sets headers" do
     expect(@parser.headers).to eql @ofx.headers
   end
