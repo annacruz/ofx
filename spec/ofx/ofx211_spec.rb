@@ -10,6 +10,10 @@ describe OFX::Parser::OFX211 do
     expect(OFX::Parser::OFX211::VERSION).to eql "2.1.1"
   end
 
+  it "returns nil when the header has no OFX processing instruction" do
+    expect(described_class.parse_headers('<?xml version="1.0"?><!-- no OFX header -->')).to be_nil
+  end
+
   it "ignores header tokens without a quoted value" do
     headers = described_class.parse_headers('<?OFX OFXHEADER="200" STANDALONE VERSION="211"?>')
     expect(headers).to eql("OFXHEADER" => "200", "VERSION" => "211")
