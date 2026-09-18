@@ -4,9 +4,9 @@
 # Usage: ruby .github/scripts/coverage_comment.rb [coverage/.resultset.json] [coverage/rspec.json]
 #
 # Exit status tells the caller what to do with the output:
-#   EXIT_FULLY_COVERED (0)          every line and branch under lib/ is covered; nothing to post
-#   EXIT_UNCOVERED_CODE (10)        stdout holds the report of uncovered code; post it
-#   EXIT_COVERAGE_NOT_MEANINGFUL (11) the suite did not finish or had failures; ignore coverage
+#   EXIT_FULLY_COVERED (0)             every line and branch under lib/ is covered; nothing to post
+#   EXIT_UNCOVERED_CODE (10)           stdout holds the report of uncovered code; post it
+#   EXIT_COVERAGE_NOT_MEANINGFUL (11)  the suite did not finish or had failures; ignore coverage
 
 require 'json'
 
