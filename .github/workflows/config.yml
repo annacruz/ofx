@@ -38,8 +38,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          ruby .github/scripts/coverage_comment.rb > coverage/comment.md && exit 0
-          [ $? -eq 10 ] || exit 1
-          gh pr comment "${{ github.event.pull_request.number }}" --body-file coverage/comment.md
+          pr="${{ github.event.pull_request.number }}"
+          set +e
+          ruby .github/scripts/coverage_comment.rb > coverage/comment.md
+          status=$?
+          set -e
+          case "$status" in
+            10) # uncovered code: post the report
+              gh pr comment "$pr" --body-file coverage/comment.md ;;
+            0)  # full coverage: say so only if the last bot comment reported a gap
+              last=$(gh api "repos/${{ github.repository }}/issues/$pr/comments" --paginate \
+                --jq '[.[] | select(.user.login == "github-actions[bot]") | .body] | last // ""')
+              if [[ "$last" == *"<!-- simplecov-report -->"* ]]; then
+                printf '<!-- simplecov-restored -->\n## Test coverage\n\nBack to 100%% of lines and branches.\n' > coverage/comment.md
+                gh pr comment "$pr" --body-file coverage/comment.md
+              fi ;;
+            11) echo "coverage not meaningful for this run, no comment" ;;
+            *)  exit "$status" ;;
+          esac
       - name: Run RuboCop
         run: bundle exec rubocop

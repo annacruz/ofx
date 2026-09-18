@@ -3,14 +3,15 @@
 # Builds a Markdown report of the SimpleCov run for a pull request comment.
 # Usage: ruby .github/scripts/coverage_comment.rb [coverage/.resultset.json] [coverage/rspec.json]
 #
-# Exit status: 0 when there is nothing to report (full coverage, or the
-# suite itself failed so coverage is not meaningful); 10 when the report
-# lists uncovered code and should be posted.
+# Exit status: 0 when every line and branch is covered; 10 when the report
+# lists uncovered code and should be posted; 11 when the suite did not
+# finish or had failing examples, so coverage is not meaningful.
 
 require 'json'
 
 MARKER = '<!-- simplecov-report -->'
 REPORT = 10
+SKIPPED = 11
 
 def pct(covered, total)
   return '100.0%' if total.zero?
@@ -23,14 +24,14 @@ rspec_path = ARGV.fetch(1, 'coverage/rspec.json')
 
 unless File.exist?(rspec_path)
   warn "#{rspec_path} not found: the suite did not finish, skipping the coverage report"
-  exit 0
+  exit SKIPPED
 end
 
 summary = JSON.parse(File.read(rspec_path)).fetch('summary')
 failures = summary.fetch('failure_count') + summary.fetch('errors_outside_of_examples_count')
 unless failures.zero?
   warn "#{failures} failing example(s): coverage is not meaningful, skipping the coverage report"
-  exit 0
+  exit SKIPPED
 end
 
 coverage = JSON.parse(File.read(path)).values.first.fetch('coverage')
