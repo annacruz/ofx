@@ -29,11 +29,11 @@ module OFX
       def open_resource(resource)
         if resource.respond_to?(:read)
           resource
+        elsif File.file?(resource)
+          File.open(resource)
         else
-          open(resource)
+          StringIO.new(resource)
         end
-      rescue
-        StringIO.new(resource)
       end
 
       private
