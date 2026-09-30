@@ -4,7 +4,7 @@ describe OFX::Transaction do
   before do
     @ofx = OFX::Parser::Base.new("spec/fixtures/sample.ofx")
     @parser = @ofx.parser
-    @account = @parser.account
+    @account = @parser.accounts.first
   end
 
   context "debit" do
@@ -139,7 +139,7 @@ describe OFX::Transaction do
     before do
       @ofx = OFX::Parser::Base.new("spec/fixtures/bb.ofx")
       @parser = @ofx.parser
-      @account = @parser.account
+      @account = @parser.accounts.first
     end
 
     it "returns dep" do
@@ -167,7 +167,7 @@ describe OFX::Transaction do
     before do
       @ofx = OFX::Parser::Base.new("spec/fixtures/santander.ofx")
       @parser = @ofx.parser
-      @account = @parser.account
+      @account = @parser.accounts.first
     end
 
     context "debit" do
@@ -206,15 +206,15 @@ describe OFX::Transaction do
     end
 
     it "does not raise error" do
-      expect { @parser.account.transactions }.to_not raise_error
+      expect { @parser.accounts.first.transactions }.to_not raise_error
     end
 
     it "returns zero in amount" do
-      expect(@parser.account.transactions[0].amount).to eql BigDecimal('0.0')
+      expect(@parser.accounts.first.transactions[0].amount).to eql BigDecimal('0.0')
     end
 
     it "returns zero in amount_in_pennies" do
-      expect(@parser.account.transactions[0].amount_in_pennies).to eql 0
+      expect(@parser.accounts.first.transactions[0].amount_in_pennies).to eql 0
     end
   end
 end
