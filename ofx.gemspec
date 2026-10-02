@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.files         = Dir['lib/**/*.rb', 'spec/**/*.rb', 'README.rdoc', 'Rakefile']
   s.require_paths = ['lib']
   s.licenses      = ['MIT']
+  s.metadata      = { 'rubygems_mfa_required' => 'true' }
   s.required_ruby_version = '>= 3.1.0'
 
   s.add_dependency 'nokogiri', '>= 1.13.1', '< 1.19.2'
