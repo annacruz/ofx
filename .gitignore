@@ -3,3 +3,4 @@
 pkg
 Gemfile.lock
 .codex/*
+coverage/

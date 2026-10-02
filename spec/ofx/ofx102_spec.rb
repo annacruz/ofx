@@ -19,6 +19,10 @@ describe OFX::Parser::OFX102 do
     expect(headers["VERSION"]).to eql "102"
   end
 
+  it "returns nil when the header text has no key/value pairs" do
+    expect(OFX::Parser::OFX102.parse_headers("not a header")).to be_nil
+  end
+
   it "sets body" do
     expect(@parser.body).to eql @ofx.body
   end
