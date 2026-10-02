@@ -1,13 +1,21 @@
 version: 2
 updates:
-- package-ecosystem: bundler
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "08:00"
-  open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: nokogiri
-    versions:
-    - 1.11.1
-    - 1.11.2
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "08:00"
+    open-pull-requests-limit: 10
+    groups:
+      rubocop:
+        patterns:
+          - "rubocop*"
+      development:
+        patterns:
+          - "guard"
+          - "guard-rspec"
+          - "rspec"
+          - "rake"
+          - "byebug"
+          - "bundler-audit"
+          - "simplecov"
