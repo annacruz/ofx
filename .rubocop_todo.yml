@@ -257,11 +257,6 @@ RSpec/StubbedMock:
   Exclude:
     - 'spec/ofx/ofx_parser_spec.rb'
 
-# Offense count: 1
-Security/Open:
-  Exclude:
-    - 'lib/ofx/parser.rb'
-
 # Offense count: 40
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
