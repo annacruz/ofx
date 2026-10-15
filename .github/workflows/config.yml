@@ -33,3 +33,16 @@ jobs:
         run: bundle exec rspec
       - name: Run RuboCop
         run: bundle exec rubocop
+
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+      - name: Check dependencies for known vulnerabilities
+        run: bundle exec bundler-audit check --update
