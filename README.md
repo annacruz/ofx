@@ -52,6 +52,22 @@ Run the code-quality checks with:
 bundle exec rubocop
 ```
 
+## Releasing
+
+Only the gem owners on RubyGems can publish. The steps, in order:
+
+1. Move the "Unreleased" entry in `CHANGELOG.md` to the new version and date.
+2. Bump `OFX::VERSION` in `lib/ofx/version.rb` and run `bundle install` to refresh `Gemfile.lock`.
+3. Open a pull request with those changes and merge it into `main`.
+4. On an up-to-date `main`, run:
+
+   ```sh
+   bundle exec rake release
+   ```
+
+   It builds the gem, creates and pushes the `vX.Y.Z` tag, and publishes to RubyGems.
+5. Create a [GitHub release](https://github.com/annacruz/ofx/releases/new) from that tag and paste the changelog entry as the notes.
+
 ## Creator
 
 - Nando Vieira - http://simplesideias.com.br
