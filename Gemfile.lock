@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ofx (0.3.8)
+    ofx (1.0.0)
       bigdecimal
       erb (>= 4.0.4, < 6.1.0)
       nkf
