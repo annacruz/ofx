@@ -30,11 +30,6 @@ module OFX
         end
         headers
       end
-
-      def self.strip_quotes(s)
-        return unless s
-        s.sub(/^"(.*)"$/, '\1')
-      end
     end
   end
 end

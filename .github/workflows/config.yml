@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write # coverage comment (see .github/scripts/coverage_comment.rb)
 
 concurrency:
   group: tests-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -30,6 +31,31 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
       - name: Run Tests
-        run: bundle exec rspec
+        run: bundle exec rspec --format progress --format json --out coverage/rspec.json
+      - name: Comment uncovered code on the pull request
+        if: always() && github.event_name == 'pull_request' && matrix.ruby-version == '3.4'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pr="${{ github.event.pull_request.number }}"
+          set +e
+          ruby .github/scripts/coverage_comment.rb > coverage/comment.md
+          status=$?
+          set -e
+          # exit statuses are documented at the top of the script
+          case "$status" in
+            10) # EXIT_UNCOVERED_CODE: post the report
+              gh pr comment "$pr" --body-file coverage/comment.md ;;
+            0)  # EXIT_FULLY_COVERED: say so only if the last bot comment reported a gap
+              last=$(gh api "repos/${{ github.repository }}/issues/$pr/comments" --paginate \
+                --jq '[.[] | select(.user.login == "github-actions[bot]") | .body] | last // ""')
+              if [[ "$last" == *"<!-- simplecov-report -->"* ]]; then
+                printf '<!-- simplecov-restored -->\n## Test coverage\n\nBack to 100%% of lines and branches.\n' > coverage/comment.md
+                gh pr comment "$pr" --body-file coverage/comment.md
+              fi ;;
+            11) echo "EXIT_COVERAGE_NOT_MEANINGFUL: suite did not finish or had failures, no comment" ;;
+            *)  exit "$status" ;;
+          esac
       - name: Run RuboCop
         run: bundle exec rubocop
