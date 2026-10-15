@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
       end
   TXT
 
-  s.files         = Dir['lib/**/*.rb', 'spec/**/*.rb', 'README.rdoc', 'Rakefile']
+  s.files         = Dir['lib/**/*.rb', 'spec/**/*.rb', 'README.md', 'CHANGELOG.md', 'LICENSE', 'Rakefile']
   s.require_paths = ['lib']
   s.licenses      = ['MIT']
   s.required_ruby_version = '>= 3.1.0'
