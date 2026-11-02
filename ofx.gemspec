@@ -23,9 +23,9 @@ Gem::Specification.new do |s|
   s.files         = Dir['lib/**/*.rb', 'spec/**/*.rb', 'README.rdoc', 'Rakefile']
   s.require_paths = ['lib']
   s.licenses      = ['MIT']
-  s.required_ruby_version = '>= 3.1.0'
+  s.required_ruby_version = '>= 3.3.0'
 
-  s.add_dependency 'nokogiri', '>= 1.13.1', '< 1.19.2'
+  s.add_dependency 'nokogiri', '>= 1.13.1', '< 1.20'
   s.add_dependency 'bigdecimal'
   s.add_dependency 'erb', '>= 4.0.4', '< 6.1.0'
   s.add_dependency 'nkf'
