@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'open-uri'
+require 'stringio'
+require 'time'
 require 'nokogiri'
 require 'bigdecimal'
 
