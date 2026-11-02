@@ -4,7 +4,7 @@ describe OFX::Account do
   before do
     @ofx = OFX::Parser::Base.new("spec/fixtures/sample.ofx")
     @parser = @ofx.parser
-    @account = @parser.account
+    @account = @parser.accounts.first
   end
 
   describe "account" do
@@ -57,7 +57,7 @@ describe OFX::Account do
       it "returns nil if AVAILBAL not found" do
         @ofx = OFX::Parser::Base.new("spec/fixtures/utf8.ofx")
         @parser = @ofx.parser
-        @account = @parser.account
+        @account = @parser.accounts.first
         expect(@account.available_balance).to be_nil
       end
     end
@@ -66,7 +66,7 @@ describe OFX::Account do
       before do
         @ofx = OFX::Parser::Base.new("spec/fixtures/creditcard.ofx")
         @parser = @ofx.parser
-        @account = @parser.account
+        @account = @parser.accounts.first
       end
 
       it "returns id" do
@@ -81,7 +81,7 @@ describe OFX::Account do
       before do
         @ofx = OFX::Parser::Base.new("spec/fixtures/dtsof_balance_issue.ofx")
         @parser = @ofx.parser
-        @account = @parser.account
+        @account = @parser.accounts.first
       end
 
       it "returns nil for date balance" do
@@ -95,10 +95,10 @@ describe OFX::Account do
         @parser = @ofx.parser
       end
       it "does not raise error when balance has date zero" do
-        expect { @parser.account.balance }.to_not raise_error
+        expect { @parser.accounts.first.balance }.to_not raise_error
       end
       it "returns NIL in balance.posted_at when balance date is zero" do
-        expect(@parser.account.balance.posted_at).to be_nil
+        expect(@parser.accounts.first.balance.posted_at).to be_nil
       end
     end
 
@@ -106,7 +106,7 @@ describe OFX::Account do
       before do
         @ofx = OFX::Parser::Base.new("spec/fixtures/santander.ofx")
         @parser = @ofx.parser
-        @account = @parser.account
+        @account = @parser.accounts.first
       end
 
       it "returns balance" do
