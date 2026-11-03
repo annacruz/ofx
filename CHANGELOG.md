@@ -11,6 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `OFX::Parser::OFX211`. It silently ignored every account after the first.
   Use `accounts` and select the desired account explicitly. See #91.
 
+### Changed
+
+- `OFX::Version::{MAJOR, MINOR, PATCH, STRING}` replaced by a single frozen
+  `OFX::VERSION` string, the layout Bundler generates for new gems.
+
 ### Added
 
 - Explicit `bigdecimal` and `nkf` runtime dependencies so the gem loads on
